@@ -65,7 +65,7 @@
       
         <li class="list-item">
           
-            <a href="/" class="item-link active">Home</a>
+            <a href="/" class="item-link">Home</a>
           
         </li>
       
@@ -104,7 +104,7 @@
         
           <li class="menu-item">
             
-              <a href="/" class="menu-link mobile-active">Home</a>
+              <a href="/" class="menu-link">Home</a>
             
           </li>
         
@@ -137,63 +137,43 @@
   </div>
 </header>
 
-    <main class="app-body">
+    <div id="article-banner">
+  <h2>Archives</h2>
+  <p class="post-date">文章归档</p>
+</div>
+<main class="app-body" id="archives">
   
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/">使用Hexo与GitHub搭建简易博客</a>
-      </h2>
-      <p class="article-date">July 3, 2018</p>
-      
-        
-  <a href="/tags#心路历程" >
-    <span class="tag-code">心路历程</span>
-  </a>
-
-  <a href="/tags#技术沉淀" >
-    <span class="tag-code">技术沉淀</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          
-说了很久想自己写一个个人博客，但是无奈就是患有拖延症，现在才想到逐渐补上。那好，就直接从怎样搭建现在这个简易博客说起。
-
-能够快速地搭建起这一个博客，非常感谢的是前辈们给出的相关文档。更多的，是依赖于 Hexo 这个开源框架，以及 GitHub 这个为广大程序员所熟知的平台。下面先简单介绍 ...
-        
+  
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2018
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/" class="archive-title">使用Hexo与GitHub搭建简易博客</a>
+        <p class="archive-date">07-03</p>
       </div>
-      <a class="more" href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/05/28/20180528-规整生活/">规整生活</a>
-      </h2>
-      <p class="article-date">May 28, 2018</p>
-      
-        
-  <a href="/tags#杂记" >
-    <span class="tag-code">杂记</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          
-想了想最近略显凌乱的生活，是时候改变下了。
-
-
-        
+    
+      <div class="section-list-item">
+        <a href="/2018/05/28/20180528-规整生活/" class="archive-title">规整生活</a>
+        <p class="archive-date">05-28</p>
       </div>
-      <a class="more" href="/2018/05/28/20180528-规整生活/">Read more</a>
-    </article>
-  
-
+    
+  </div>
+</section>
   
 </main>
 
-
+<script>
+  (function () {
+    var url = 'http://yoursite.com/tags/技术沉淀/index.html';
+    $('#article-banner').geopattern(url);
+    $('.header').removeClass('fixed-header');
+  })();
+</script>
     <div class="scroll-top">
   <span class="arrow-icon"></span>
 </div>
