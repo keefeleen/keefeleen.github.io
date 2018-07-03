@@ -10,7 +10,7 @@
   
   <title>
     
-      规整生活 | This is Coding
+      使用Hexo与GitHub搭建简易博客 | This is Coding
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -138,8 +138,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>规整生活</h2>
-  <p class="post-date">2018-05-28</p>
+  <h2>使用Hexo与GitHub搭建简易博客</h2>
+  <p class="post-date">2018-07-03</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -148,16 +148,22 @@
   <!-- Article START -->
   <article class="post-article">
     <section class="markdown-content"><blockquote>
-<p>想了想最近略显凌乱的生活，是时候改变下了。</p>
+<blockquote>
+<p>说了很久想自己写一个个人博客，但是无奈就是患有拖延症，现在才想到逐渐补上。那好，就直接从怎样搭建现在这个简易博客说起。</p>
 </blockquote>
+</blockquote>
+<p>能够快速地搭建起这一个博客，非常感谢的是前辈们给出的相关文档。更多的，是依赖于 Hexo 这个开源框架，以及 GitHub 这个为广大程序员所熟知的平台。下面先简单介绍下他们的作用（其实更多的是记录给自己看）</p>
+<h4 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h4><p><a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> 是 GitHub 所提供的免费博客托管平台，并且有 GitHub 免费提供的域名。所以很大程度上减少了维护一个个人博客的成本。其本质上来说，就是静态网站的托管服务器。</p>
+<h4 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h4><p><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 是一个快速搭建博客的框架，依赖于 Node.js，拥有丰富多彩的<a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题</a>，能够直接将撰写好的 MarkDown 文件编译成为静态文件，嵌入到网站整体当中。</p>
+<p>同时，Hexo 还能方便的与 GitHub Pages 结合，使用其封装好的 <code>hexo-cli</code> 命令行工具，一键部署更新后的代码。</p>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#杂记" >
-    <span class="tag-code">杂记</span>
+  <a href="/tags#心路历程" >
+    <span class="tag-code">心路历程</span>
   </a>
 
       </div>
@@ -168,13 +174,13 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-    
-      <a class="nav-right" href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/">
+      <a class="nav-left" href="/2018/05/28/20180528-规整生活/">
+        <span class="nav-arrow">← </span>
         
-          使用Hexo与GitHub搭建简易博客
+          规整生活
         
-        <span class="nav-arrow"> →</span>
       </a>
+    
     
   </div>
 
@@ -220,7 +226,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="nav">none</ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#GitHub-Pages"><span class="toc-nav-text">GitHub Pages</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Hexo"><span class="toc-nav-text">Hexo</span></a></li></ol>
     
   </div>
 </aside>
@@ -230,7 +236,7 @@
 
 <script>
   (function () {
-    var url = 'http://yoursite.com/2018/05/28/20180528-规整生活/';
+    var url = 'http://yoursite.com/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -286,7 +292,7 @@
     var gitmentConfig = "yanm1ng";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "规整生活",
+        id: "使用Hexo与GitHub搭建简易博客",
         owner: "yanm1ng",
         repo: "yanm1ng.github.io",
         oauth: {

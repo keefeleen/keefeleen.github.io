@@ -10,7 +10,7 @@
   
   <title>
     
-      Tags | This is Coding
+      This is Coding
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -138,55 +138,40 @@
 </header>
 
     <div id="article-banner">
-  <h2>Tags</h2>
-  <p class="post-date">标签检索</p>
+  <h2>Archives</h2>
+  <p class="post-date">文章归档</p>
 </div>
-<main class="app-body">
-  <div id="tag-cloud">
+<main class="app-body" id="archives">
+  
+  
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2018
+  </h1>
+  <div class="section-list">
     
-      <a class="tag0" data-name="tag-心路历程">心路历程</a>
     
-      <a class="tag1" data-name="tag-杂记">杂记</a>
+      <div class="section-list-item">
+        <a href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/" class="archive-title">使用Hexo与GitHub搭建简易博客</a>
+        <p class="archive-date">07-03</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/05/28/20180528-规整生活/" class="archive-title">规整生活</a>
+        <p class="archive-date">05-28</p>
+      </div>
     
   </div>
+</section>
   
-    <div class="tag-list">
-      <h3 class="tag-name" id="tag-心路历程">心路历程</h3>
-      
-        <ul class="tag-preview">
-          <li>
-            <a href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/">使用Hexo与GitHub搭建简易博客</a>
-          </li>
-        </ul>
-        
-    </div>
-    
-    <div class="tag-list">
-      <h3 class="tag-name" id="tag-杂记">杂记</h3>
-      
-        <ul class="tag-preview">
-          <li>
-            <a href="/2018/05/28/20180528-规整生活/">规整生活</a>
-          </li>
-        </ul>
-        
-    </div>
-    
 </main>
 
 <script>
   (function () {
-    var url = 'http://yoursite.com/tags/index.html'
-    $('#article-banner').geopattern(url)
-    $('.header').removeClass('fixed-header')
-
-    var tag = location.hash.replace('#', '')
-    if (tag) {
-      var tagId = "#tag-" + tag;
-      $("html, body").animate({
-        scrollTop: $(tagId).offset().top 
-      }, 400)
-    }
+    var url = 'http://yoursite.com/tags/心路历程/index.html';
+    $('#article-banner').geopattern(url);
+    $('.header').removeClass('fixed-header');
   })();
 </script>
     <div class="scroll-top">
