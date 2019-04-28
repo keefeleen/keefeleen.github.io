@@ -10,7 +10,7 @@
   
   <title>
     
-      查看Linux进程占用内存 | This is Coding
+      20190428_Python的实用代码记录 | This is Coding
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -138,8 +138,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>查看Linux进程占用内存</h2>
-  <p class="post-date">2018-07-11</p>
+  <h2>20190428_Python的实用代码记录</h2>
+  <p class="post-date">2019-04-28</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -147,39 +147,25 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><blockquote>
-<p>用了这么久 Linux，当有人问起一些基础的指令问题的时候，还是会愣一下。回头想想，现在老了，记性不好了，对于不常用的东西，还是找个地方把他存盘好一点。</p>
-</blockquote>
-<h3 id="方便快捷-PS"><a href="#方便快捷-PS" class="headerlink" title="方便快捷 - PS"></a>方便快捷 - PS</h3><p>查看内存使用，我们可能第一时间想到的是用 top，但是像我这种半吊子来说，top 在我脑海中始终是那个充满着一堆动态变化数据的表格。那些在界面中的各种复杂骚操作早已忘得一干二净。回过头来，其实 Linux 中最常用的指令 <code>ps</code>，就能够满足需求。</p>
-<p>话不多说，先上指令:</p>
-<p>  <code>ps -eo rss,pmem,pcpu,vsize,args</code></p>
-<p>上面的指令就是对进程信息进行格式化输出，<code>-o</code>参数，加上后面的字段，指定了我们希望输出的信息。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rss: resident set size 的缩写，表示进程占用的内存大小，以 KB 为单位</span><br><span class="line">pmem: percentage of memory，表示内存占用百分比</span><br><span class="line">pcpu: percentage of cpu usage，表示 cpu 占用百分比</span><br><span class="line">vsize: 表示进程占用虚拟内存大小，以 KB 为单位</span><br><span class="line">args: 进程名，或者指令的名称</span><br></pre></td></tr></table></figure>
-<p>上面这几个参数是我们最经常用到的，那么如果我们要使用其中某个数值字段进行排序，我们会用到<code>sort</code>指令</p>
-<p>  <code>ps -eo rss,pmem,pcpu,vsize,args | sort -k 1 -r -n | less</code></p>
-<p>上面<code>-k</code>参数表示的是我需要按照管道传入数据的第几列数据进行排序，另外两个参数不累述。</p>
-<h3 id="清晰详细-TOP"><a href="#清晰详细-TOP" class="headerlink" title="清晰详细 - TOP"></a>清晰详细 - TOP</h3><p>top 的话本人用的比较少，下面简单的总结记录一下。</p>
-<p>使用 top 查看进程的内存占用等信息，首先我们可以用 ps 指令找出进程的 pid</p>
-<p>  <code>ps aux | awk &#39;/&lt;process_name&gt;/&#39;</code></p>
-<blockquote>
-<p>这里值得注意的是，其实 <code>ps aux</code> 输出的第 3、4 列，就已经分别表示了进程的 CPU 以及内存的占用率(百分比)，第 5、6 列，则是 VSZ、RSS，即虚拟内存占用大小（virtual memory size，和实际内存占用大小（resident set size）</p>
-</blockquote>
-<p>然后使用如下指令</p>
-<p>  <code>top -p &lt;pid&gt;</code></p>
-<blockquote>
-<p>PS: 进入到 top 的交互界面时，按 <code>c</code> 键的话，可以看到完整的 command，此时如果再按 <code>shift + w</code> 的话，就能记住此配置，以便下次打开时直接显示完整的 command。</p>
-</blockquote>
-<h3 id="更进一步"><a href="#更进一步" class="headerlink" title="更进一步"></a>更进一步</h3><p>其实很多情况下，无论在服务器排查故障或者调查应用的性能问题时，不仅仅需要到进程的层面，而需要更深入的查看线程的资源使用情况。</p>
-<p>那么我们如何查看线程的资源占用情况呢。</p>
-<p>对于 top，我们可以在参数后加上 <code>-H</code>，即 </p>
-<p>  <code>top -Hp &lt;pid&gt;</code></p>
-<p>同样，对于 ps 指令，同样可以加上 <code>H</code> 参数</p>
-<p>  <code>ps H -eo rss,pmem,pcpu,vsize,args  | sort -k 1 -r -n</code></p>
-<p>如果希望查看一个进程树的情况，我们在知道进程名称的情况下，可以使用如下指令查看</p>
-<p>  <code>ps -ef f | grep &lt;process_name&gt;</code></p>
-<p>但是有些情况下上述指令是不准的，因为线程并没包括所属进程的名称，那么我们就可以使用下面的指令</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps -Lf &lt;pid&gt;</span><br><span class="line"></span><br><span class="line">-L: Show threads, possibly with LWP and NLWP columns.</span><br></pre></td></tr></table></figure>
-<p>以上就是 Linux 使用时查看进程、线程信息的一些基本指令介绍了，更多的会在以后的使用过程中再进行补充。</p>
+    <section class="markdown-content"><h3 id="反转列表"><a href="#反转列表" class="headerlink" title="反转列表"></a>反转列表</h3><p>列表反转比较简单，列表原生方法 <code>reverse()</code> 既可以实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [1]: a = [1,2,3]</span><br><span class="line"></span><br><span class="line">In [2]: a.reverse()</span><br><span class="line"></span><br><span class="line">In [3]: a</span><br><span class="line">Out[3]: [3, 2, 1]</span><br></pre></td></tr></table></figure>
+<p>如果你想表现得有种来去如风的感觉，而且是想直接反转列表并赋值，也可以这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 因为上面的 a 已经被 reverse 过了</span><br><span class="line">In [4]: a[::-1]</span><br><span class="line">Out[4]: [1, 2, 3]</span><br></pre></td></tr></table></figure>
+<p><code>[::-1]</code>，以 <code>:</code> 分隔，三个部分分别表示开始的索引位置，结束的索引位置，以及步长，<code>[::-1]</code> 其实也是 <code>a[-1:-4:-1]</code> 的简写，当然，你可能事先不知道列表的长度，所以直接 <code>[::-1]</code> 是最简单的写法。</p>
+<h3 id="合并字典"><a href="#合并字典" class="headerlink" title="合并字典"></a>合并字典</h3><p>不多说，先上代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def merge(source, target):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    用于将两个字典进行合并</span><br><span class="line">    :param target: 希望被更新的字典</span><br><span class="line">    :param source: 包含新数据的字典</span><br><span class="line">    :return: </span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    # 将两个字典进行合并，同个字段，由 target 的值覆盖 source 的值，如果不存在，则新增</span><br><span class="line">    # 简化版本，参考网上递归</span><br><span class="line">    for k, v in source.iteritems():</span><br><span class="line">        if isinstance(v, dict):</span><br><span class="line">            node = target.setdefault(k, &#123;&#125;)</span><br><span class="line">            merge(v, node)</span><br><span class="line">        else:</span><br><span class="line">            target[k] = v</span><br><span class="line">    return target</span><br></pre></td></tr></table></figure>
+<p>代码是很简单的迭代思路，值得注意的是，<code>setdefault()</code> 方法的使用。</p>
+<p>其实之前本人是对这个方法的使用时有所误解的，只是简单的认为这个方法是当字典中<code>指定的某个 key 不存在时，则增加这个 key 并赋值</code>，但是其实，这个方法是<strong>有返回值</strong>的，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">key 不存在，则设定这个 key 的值为 setdefault() 方法中第二个参数的值，并返回</span><br><span class="line">key 存在，则直接返回这个 key 的值，并且，不会用第二个参数的值去覆盖原有的值!!!</span><br></pre></td></tr></table></figure>
+<p>所以，setdefault() 成为了这个 merge() 方法的核心。另外一点就是，我们获取的值，即 node，是本身 target 字典中对应”节点”的引用，所以修改 node 的内容，会直接改变 target 这个传入的字典。</p>
+<h3 id="扁平化与反扁平化字典"><a href="#扁平化与反扁平化字典" class="headerlink" title="扁平化与反扁平化字典"></a>扁平化与反扁平化字典</h3><p>扁平化字典的需求，其实是在做开发的时候遇到的问题，就是希望把一个嵌套类型的字典，如 <code>{&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 1}}}</code>，转换成为如<code>{&#39;a.b.c&#39;: 1}</code>这种形式，其根本目的是希望能够让前端的程序，在列表中，更好的展现这个字典的内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">def function(data):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    用于将复杂的结构转换为友好的字段名格式</span><br><span class="line">    :param data: </span><br><span class="line">    :return: </span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    stack = [((), data)]</span><br><span class="line">    result = []</span><br><span class="line">    while stack:</span><br><span class="line">        field_name, current = stack.pop()</span><br><span class="line">        for k, v in current.iteritems():</span><br><span class="line">            if isinstance(v, dict):</span><br><span class="line">                stack.append((field_name + (k,), v))</span><br><span class="line">            else:</span><br><span class="line">                result.append(&#123;</span><br><span class="line">                    &quot;.&quot;.join((field_name + (k,))): v</span><br><span class="line">                &#125;)</span><br><span class="line">    return sorted(result, key=lambda t: t[0])</span><br></pre></td></tr></table></figure>
+<p>代码整体的思路比较简单，首先设定一个限于函数内存的栈，用来缓存处理的信息，而推入栈中的内容，是一个元组，包含以下两个项：</p>
+<ol>
+<li>当前的字段列表，即能够表明，这个元组表示的是字典中的哪一个节点</li>
+<li>该节点的内容，即表示，在这一层中，数据的内容是什么</li>
+</ol>
+<p>那么捋一捋之后就比较清楚整体的逻辑了，即从整个字典开始扫，如果发现下一层元素的值仍然是个字典，那么，将这个元素的 key 以及 value 放到 stack 中，等待 while 循环进行处理。</p>
 </section>
     <!-- Tags START -->
     
@@ -198,20 +184,13 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/">
+      <a class="nav-left" href="/2018/07/11/20180711-查看Linux进程占用内存/">
         <span class="nav-arrow">← </span>
         
-          使用Hexo与GitHub搭建简易博客
+          查看Linux进程占用内存
         
       </a>
     
-    
-      <a class="nav-right" href="/2019/04/28/20190428-Python字典的实用操作记录/">
-        
-          20190428_Python的实用代码记录
-        
-        <span class="nav-arrow"> →</span>
-      </a>
     
   </div>
 
@@ -257,7 +236,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#方便快捷-PS"><span class="toc-nav-text">方便快捷 - PS</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#清晰详细-TOP"><span class="toc-nav-text">清晰详细 - TOP</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#更进一步"><span class="toc-nav-text">更进一步</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#反转列表"><span class="toc-nav-text">反转列表</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#合并字典"><span class="toc-nav-text">合并字典</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#扁平化与反扁平化字典"><span class="toc-nav-text">扁平化与反扁平化字典</span></a></li></ol>
     
   </div>
 </aside>
@@ -267,7 +246,7 @@
 
 <script>
   (function () {
-    var url = 'http://yoursite.com/2018/07/11/20180711-查看Linux进程占用内存/';
+    var url = 'http://yoursite.com/2019/04/28/20190428-Python字典的实用操作记录/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -323,7 +302,7 @@
     var gitmentConfig = "yanm1ng";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "查看Linux进程占用内存",
+        id: "20190428_Python的实用代码记录",
         owner: "yanm1ng",
         repo: "yanm1ng.github.io",
         oauth: {
