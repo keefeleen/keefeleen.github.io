@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Hackerose">
 <meta property="og:description" content="踩坑实录其实说是踩坑，其本质上是对于 vim 的不熟悉。 起因是在于相对一个 SQL 文件内容进行批量更改，至于更改的原因，是导出了线上的数据，希望导入到测试数据库时，json 类型的字段发生了报错，网上也有对应解答，具体的报错分析看在之后专门写一篇分析分析 根据网上给出的报错解决办法，我需要对 SQL 语句进行处理。 将 1INSERT INTO json_table (json_column)">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-17T09:09:35.000Z">
+<meta property="og:updated_time" content="2019-05-17T09:46:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vim中的正则替换">
 <meta name="twitter:description" content="踩坑实录其实说是踩坑，其本质上是对于 vim 的不熟悉。 起因是在于相对一个 SQL 文件内容进行批量更改，至于更改的原因，是导出了线上的数据，希望导入到测试数据库时，json 类型的字段发生了报错，网上也有对应解答，具体的报错分析看在之后专门写一篇分析分析 根据网上给出的报错解决办法，我需要对 SQL 语句进行处理。 将 1INSERT INTO json_table (json_column)">
@@ -333,7 +333,7 @@
                 
               
 
-              <time title="Created: 2019-05-17 14:33:44 / Modified: 17:09:35" itemprop="dateCreated datePublished" datetime="2019-05-17T14:33:44+08:00">2019-05-17</time>
+              <time title="Created: 2019-05-17 14:33:44 / Modified: 17:46:59" itemprop="dateCreated datePublished" datetime="2019-05-17T14:33:44+08:00">2019-05-17</time>
             
 
             
@@ -388,6 +388,12 @@
 <p>顺势改一下指令为如下，完美替换。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/X&apos;\(.*\)&apos;/CONVERT(X&apos;\1&apos;) USING utf8mb4)/g</span><br></pre></td></tr></table></figure>
 <p>记录完毕，继续搬砖去。</p>
+<h3 id="vim-中的非贪婪匹配"><a href="#vim-中的非贪婪匹配" class="headerlink" title="vim 中的非贪婪匹配"></a>vim 中的非贪婪匹配</h3><p>做事做着做着，发现一个问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/X&apos;(.*)&apos;/CONVERT\(X&apos;\1&apos; USING utf8mb4\)/g</span><br></pre></td></tr></table></figure>
+<p>这个正则表达式是贪婪匹配，之前歪打正着没出问题，但是之后又有几个 SQL 要修改就暴露问题了。</p>
+<p>然而，vim 中的非贪婪匹配并不是在其后直接加上 <code>\?</code> 就行了的(记得吗?要转义哦)</p>
+<p>上网搜了一下，vim 中非贪婪匹配，用 <code>\{-}</code> 替换 <code>*</code> 即可，则之前的替换语句应该这样写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/X&apos;\(.\&#123;-&#125;\)&apos;/CONVERT(X&apos;\1&apos; USING utf8mb4)/g</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -564,7 +570,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#踩坑实录"><span class="nav-number">1.</span> <span class="nav-text">踩坑实录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#踩坑实录"><span class="nav-number">1.</span> <span class="nav-text">踩坑实录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vim-中的非贪婪匹配"><span class="nav-number">2.</span> <span class="nav-text">vim 中的非贪婪匹配</span></a></li></ol></div>
             
 
           </div>

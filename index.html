@@ -331,7 +331,7 @@
                 
               
 
-              <time title="Created: 2019-05-17 14:33:44 / Modified: 17:09:35" itemprop="dateCreated datePublished" datetime="2019-05-17T14:33:44+08:00">2019-05-17</time>
+              <time title="Created: 2019-05-17 14:33:44 / Modified: 17:46:59" itemprop="dateCreated datePublished" datetime="2019-05-17T14:33:44+08:00">2019-05-17</time>
             
 
             
@@ -388,6 +388,12 @@
 <p>顺势改一下指令为如下，完美替换。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/X&apos;\(.*\)&apos;/CONVERT(X&apos;\1&apos;) USING utf8mb4)/g</span><br></pre></td></tr></table></figure>
 <p>记录完毕，继续搬砖去。</p>
+<h3 id="vim-中的非贪婪匹配"><a href="#vim-中的非贪婪匹配" class="headerlink" title="vim 中的非贪婪匹配"></a>vim 中的非贪婪匹配</h3><p>做事做着做着，发现一个问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/X&apos;(.*)&apos;/CONVERT\(X&apos;\1&apos; USING utf8mb4\)/g</span><br></pre></td></tr></table></figure>
+<p>这个正则表达式是贪婪匹配，之前歪打正着没出问题，但是之后又有几个 SQL 要修改就暴露问题了。</p>
+<p>然而，vim 中的非贪婪匹配并不是在其后直接加上 <code>\?</code> 就行了的(记得吗?要转义哦)</p>
+<p>上网搜了一下，vim 中非贪婪匹配，用 <code>\{-}</code> 替换 <code>*</code> 即可，则之前的替换语句应该这样写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/X&apos;\(.\&#123;-&#125;\)&apos;/CONVERT(X&apos;\1&apos; USING utf8mb4)/g</span><br></pre></td></tr></table></figure>
 
           
         
