@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="">
+<html class="theme-next pisces use-motion" lang="">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -70,7 +70,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     version: '7.1.1',
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
     back2top: true,
@@ -244,9 +244,6 @@
   
 
   
-    
-
-  
 
   
 </nav>
@@ -266,6 +263,9 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
+            
+
           
           <div id="content" class="content">
             
@@ -331,7 +331,7 @@
                 
               
 
-              <time title="Created: 2019-05-17 14:33:44 / Modified: 14:51:22" itemprop="dateCreated datePublished" datetime="2019-05-17T14:33:44+08:00">2019-05-17</time>
+              <time title="Created: 2019-05-17 14:33:44 / Modified: 17:09:35" itemprop="dateCreated datePublished" datetime="2019-05-17T14:33:44+08:00">2019-05-17</time>
             
 
             
@@ -380,7 +380,7 @@
 <p>替换为</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO json_table (json_column) VALUES (CONVERT(X&apos;7B22666F6F223A2022626172227D&apos; using utf8mb4));</span><br></pre></td></tr></table></figure>
 <p>最方便的其实就想到了用 vim 中自带的正则替换功能。于是直接写了如下替换语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/X&apos;(.*)&apos;/CONVERT\(X&apos;\1&apos;\) USING utf8mb4\)/g</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/X&apos;(.*)&apos;/CONVERT\(X&apos;\1&apos; USING utf8mb4\)/g</span><br></pre></td></tr></table></figure>
 <p>但是回车一敲，就直接报<code>Pattern not found: X&#39;(.*)&#39;</code>的错误，看了半天，我的<code>()</code>是为了用来捕捉匹配的内容的啊。</p>
 <p>百思不得姐，最终上网看<a href="https://vim.fandom.com/wiki/Search_and_replace" target="_blank" rel="noopener">相关的文档</a>，直接定位到了这一句:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+, ?, |, &amp;, &#123;, (, and ) must be escaped to use their special function.</span><br></pre></td></tr></table></figure>
@@ -389,148 +389,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/X&apos;\(.*\)&apos;/CONVERT(X&apos;\1&apos;) USING utf8mb4)/g</span><br></pre></td></tr></table></figure>
 <p>记录完毕，继续搬砖去。</p>
 
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/17/sed正则替换/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Keefe Lin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hackerose"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/17/sed正则替换/" class="post-title-link" itemprop="url">sed正则替换</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-17 14:33:44 / Modified: 14:35:04" itemprop="dateCreated datePublished" datetime="2019-05-17T14:33:44+08:00">2019-05-17</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
           
         
       
@@ -1366,7 +1224,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1451,7 +1309,7 @@
 
 
 
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.1</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
 
 
 
@@ -1539,7 +1397,9 @@
   
 
 
-  <script src="/js/schemes/muse.js?v=7.1.1"></script>
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
 
 
 
