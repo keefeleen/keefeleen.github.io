@@ -1,357 +1,1598 @@
 <!DOCTYPE html>
-<html>
-  <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-  <meta name="description" content="yanm1ng&#39;s blog">
-  <meta name="keyword" content="hexo-theme, vuejs">
-  
-    <link rel="shortcut icon" href="/css/images/logo.png">
-  
-  <title>
-    
-      This is Coding
-    
-  </title>
-  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/plugins/gitment.css">
-  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
-  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
-  <script src="/js/qrious.js"></script>
-<script src="/js/gitment.js"></script>
-  
-  
-    <!-- MathJax support START -->
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
 
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <!-- MathJax support END -->
+
+
+
+
+
+
+
+
+
+
+
   
 
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="This is Coding">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="This is Coding">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="This is Coding">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>This is Coding</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
 </head>
-<div class="wechat-share">
-  <img src="/css/images/logo.png" />
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">This is Coding</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
-  <body>
-    <header class="header fixed-header">
-  <div class="header-container">
-    <a class="home-link" href="/">
-      <div class="logo"></div>
-      <span>This is Coding</span>
-    </a>
-    <ul class="right-list">
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
       
-        <li class="list-item">
+        
+        
+        
           
-            <a href="/" class="item-link active">Home</a>
-          
-        </li>
+          <li class="menu-item menu-item-home menu-item-active">
+
+    
+    
+    
       
-        <li class="list-item">
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Home</a>
+
+  </li>
+        
+        
+        
           
-            <a href="/tags/" class="item-link">Tags</a>
-          
-        </li>
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
       
-        <li class="list-item">
-          
-            <a href="/archives/" class="item-link">Archives</a>
-          
-        </li>
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archives</a>
+
+  </li>
+
       
-        <li class="list-item">
-          
-            <a href="/project/" class="item-link">Projects</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/about/" class="item-link">About</a>
-          
-        </li>
       
     </ul>
-    <div class="menu">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/17/20190517-vim中的正则替换/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="This is Coding"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/17/20190517-vim中的正则替换/" class="post-title-link" itemprop="url">vim中的正则替换</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-17 14:33:44 / Modified: 14:51:22" itemprop="dateCreated datePublished" datetime="2019-05-17T14:33:44+08:00">2019-05-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="踩坑实录"><a href="#踩坑实录" class="headerlink" title="踩坑实录"></a>踩坑实录</h3><p>其实说是踩坑，其本质上是对于 vim 的不熟悉。</p>
+<p>起因是在于相对一个 SQL 文件内容进行批量更改，至于更改的原因，是导出了线上的数据，希望导入到测试数据库时，json 类型的字段发生了报错，网上也有<a href="https://stackoverflow.com/questions/38078119/mysql-5-7-12-import-cannot-create-a-json-value-from-a-string-with-character-set" target="_blank" rel="noopener">对应解答</a>，具体的报错分析看在之后专门写一篇分析分析</p>
+<p>根据网上给出的报错解决办法，我需要对 SQL 语句进行处理。</p>
+<p>将</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO json_table (json_column) VALUES (X&apos;7B22666F6F223A2022626172227D&apos;);</span><br></pre></td></tr></table></figure>
+<p>替换为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO json_table (json_column) VALUES (CONVERT(X&apos;7B22666F6F223A2022626172227D&apos; using utf8mb4));</span><br></pre></td></tr></table></figure>
+<p>最方便的其实就想到了用 vim 中自带的正则替换功能。于是直接写了如下替换语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/X&apos;(.*)&apos;/CONVERT\(X&apos;\1&apos;\) USING utf8mb4\)/g</span><br></pre></td></tr></table></figure>
+<p>但是回车一敲，就直接报<code>Pattern not found: X&#39;(.*)&#39;</code>的错误，看了半天，我的<code>()</code>是为了用来捕捉匹配的内容的啊。</p>
+<p>百思不得姐，最终上网看<a href="https://vim.fandom.com/wiki/Search_and_replace" target="_blank" rel="noopener">相关的文档</a>，直接定位到了这一句:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+, ?, |, &amp;, &#123;, (, and ) must be escaped to use their special function.</span><br></pre></td></tr></table></figure>
+<p>原来，vim 中的 sed，在使用这些正则表达式的特殊符号时，是需要转义才能行使其在正则表达式中的特殊行为的，例如捕获、OR 表达的等等功能。</p>
+<p>顺势改一下指令为如下，完美替换。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/X&apos;\(.*\)&apos;/CONVERT(X&apos;\1&apos;) USING utf8mb4)/g</span><br></pre></td></tr></table></figure>
+<p>记录完毕，继续搬砖去。</p>
+
+          
+        
+      
     </div>
-    <div class="menu-mask">
-      <ul class="menu-list">
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/17/sed正则替换/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="This is Coding"/>
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <li class="menu-item">
-            
-              <a href="/" class="menu-link mobile-active">Home</a>
-            
-          </li>
         
-          <li class="menu-item">
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/17/sed正则替换/" class="post-title-link" itemprop="url">sed正则替换</a>
+              
             
-              <a href="/tags/" class="menu-link">Tags</a>
-            
-          </li>
+          </h1>
         
-          <li class="menu-item">
+
+        <div class="post-meta">
+          <span class="post-time">
+
             
-              <a href="/archives/" class="menu-link">Archives</a>
             
-          </li>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-17 14:33:44 / Modified: 14:35:04" itemprop="dateCreated datePublished" datetime="2019-05-17T14:33:44+08:00">2019-05-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
         
-          <li class="menu-item">
+          
             
-              <a href="/project/" class="menu-link">Projects</a>
-            
-          </li>
+          
         
-          <li class="menu-item">
-            
-              <a href="/about/" class="menu-link">About</a>
-            
-          </li>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/20190428-用Python来描述一些基本算法--排序篇/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="This is Coding"/>
+    </span>
+
+    
+      <header class="post-header">
+
         
-      </ul>
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/28/20190428-用Python来描述一些基本算法--排序篇/" class="post-title-link" itemprop="url">用Python来描述一些基本算法--排序篇</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-04-28 18:17:58" itemprop="dateCreated datePublished" datetime="2019-04-28T18:17:58+08:00">2019-04-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-05-17 14:53:05" itemprop="dateModified" datetime="2019-05-17T14:53:05+08:00">2019-05-17</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h3><p>本身不是学计算机出身，所以说一些基本的概念还是比较薄弱的。很多次被问到一些基础的算法问题，其实脑海中都有印象自己看过，但是有时候就是想不起来。</p>
+<p>用的少不是借口(虽然在开发过程中确实用的少)，现在看来，这些基础的算法概念，是对一个人逻辑思维的展现。其实思考这些算法的实现过程，也是一个“重复造轮子的过程”，但是，你写出来了，就是一个能够“造轮子的人”。</p>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><p>其实这个是读书时期接触到的可谓是第一个算法，但是有时候知道概念，嗯，很简单，提笔写或者拿键盘敲起来，就下不了手了。这里，现根据印象，写一下这个方法(写的代码比较难看哈哈)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def bsort(target=None):</span><br><span class="line">    if not target:</span><br><span class="line">        target = range(100)</span><br><span class="line">        random.shuffle(target)</span><br><span class="line">    print &apos;origin data: &#123;&#125;&apos;.format(target)</span><br><span class="line">    # 用于原始结果</span><br><span class="line">    res = copy.deepcopy(target)</span><br><span class="line">    counter = len(target)</span><br><span class="line">    while counter &gt; 0:</span><br><span class="line">        for idx, val in enumerate(target):</span><br><span class="line">            if idx != len(target) - 1 and val &gt; target[idx + 1]:</span><br><span class="line">                # 冒个泡，交换了的话，去到下一层循环时，其实取的就是新的值了</span><br><span class="line">                target[idx] = res[idx +1]</span><br><span class="line">                target[idx + 1] = res[idx]</span><br><span class="line">                res = copy.deepcopy(target)</span><br><span class="line">        counter -= 1</span><br><span class="line">    print &apos;sorted data: &#123;&#125;&apos;.format(target)</span><br></pre></td></tr></table></figure>
+<p>写完后，google 一查，上面这东西有点在扯淡的感觉。</p>
+<p>这个 counter 是什么鬼，为什么 couter 为 0 就结束排序呢，主要是，本人当时是跟着感觉走的。那么意思是对于任何长度的列表，我外层循环的次数一定要等于列表长度以保证排序完了？</p>
+<p>而且，enumerate 使用不当！使用不当！使用不当！于是我这个菜鸟思考了一下，大概想了一下潜在问题，是否正确，会否看看源码。</p>
+<blockquote>
+<p>enumerate 本质上是个生成器，作用于的是一个可迭代对象，如果你在代码中修改了这个迭代对象，后果是难以预估的，你也不会得到想要的结果</p>
+</blockquote>
+<p>这些思想都很危险啊。</p>
+<p>那么回头看看冒泡排序的概念，其关键语句如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。这步做完后，最后的元素会是最大的数。</span><br><span class="line">这个工作，从第一个元素开始，到倒数第二个元素为结束的，这样，就能得到最大的元素在列表的结尾了。</span><br><span class="line">如上，然后循环的对子列表进行排序。</span><br></pre></td></tr></table></figure>
+<p>好的，那么重新梳理下逻辑，那么改下我们的代码，就是如下的结果了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def bsort(target=None):</span><br><span class="line">    if not target:</span><br><span class="line">        target = range(10)</span><br><span class="line">    random.shuffle(target)</span><br><span class="line">    print &apos;origin data: &#123;&#125;&apos;.format(target)</span><br><span class="line">    # 记录现在处理到了哪个位置</span><br><span class="line">    current = len(target)</span><br><span class="line">    while current &gt; 0:</span><br><span class="line">        for idx in range(0, current - 1):</span><br><span class="line">               if target[idx] &gt; target[idx + 1]:</span><br><span class="line">                # 冒个泡，交换了的话，去到下一层循环时，其实取的就是新的值了</span><br><span class="line">                tmp = target[idx]</span><br><span class="line">                target[idx] = target[idx +1]</span><br><span class="line">                target[idx + 1] = tmp</span><br><span class="line">        current -= 1</span><br><span class="line">    print &apos;sorted data: &#123;&#125;&apos;.format(target)</span><br></pre></td></tr></table></figure>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>快速排序的概念其实也是理解起来容易，但是对于我这种半路出家的人，想用代码的角度去阐释，还是要废点时间去思考的。</p>
+<p>例如，这是我根据快排的概念自己撸的一段代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">def qsort(target):</span><br><span class="line">    # 先指定好起始游标</span><br><span class="line">    start = 0</span><br><span class="line">    end = len(target) - 1</span><br><span class="line">    # 首先设定好这个列表的基准值</span><br><span class="line">    base = target[start]</span><br><span class="line">    # 开始由两边向中间处理数据，start 我们暂时成为前序游标，end 则为后序游标</span><br><span class="line">    try:</span><br><span class="line">        while start &lt; end:</span><br><span class="line">            if target[end] &lt;= base:</span><br><span class="line">                # 如果后序游标指向的值小于基准值，那么我们把这个值放到前序游标指向的位置</span><br><span class="line">                target[start] = target[end]</span><br><span class="line">            else:</span><br><span class="line">                # 后序游标前移继续扫描</span><br><span class="line">                end -= 1</span><br><span class="line">            if target[start] &gt; base:</span><br><span class="line">                # 与上面对应，前序游标指向的值大于基准值，则移到后序游标的位置</span><br><span class="line">                target[end] = target[start]</span><br><span class="line">            else:</span><br><span class="line">                # 前序游标后移</span><br><span class="line">                start += 1</span><br><span class="line">        # 当前后游标相遇，则表示前后子列表都已经扫完，那么将 base 的值赋予当前游标指向的位置</span><br><span class="line">        target[start] = base</span><br><span class="line">        # 对两边的子列表递归</span><br><span class="line">        qsort(target[0:start])</span><br><span class="line">        qsort(target[start + 1:])</span><br><span class="line">    except IndexError:</span><br><span class="line">        print &apos;processing error, &#123;&#125;, start &#123;&#125;, end &#123;&#125;&apos;.format(target, start, end)</span><br></pre></td></tr></table></figure>
+<p>这段代码可谓是千疮百孔，根本运行不成功是有原因的。首先就是因为并没有完全理解快排的概念，其次就是 python 的一些概念没有熟练掌握。</p>
+<p>例如简单说下上述代码的问题：</p>
+<ol>
+<li>首先，强调过很多次的，递归需要有一个结束递归的判断，没有的话，那是相当的危险；</li>
+<li>其次，根据快排的思路，从后序游标开始进行扫描时，并不是进行一次 if 判断就结束然后跳到前序游标扫描的逻辑的；正确的做法是从后序游标开始处理，不停的比较，直到与前序游标重合，或者找到了比基准值小的值，则停止搜索，并做后续处理的</li>
+<li>然后，也就是最后调用递归的部分，采用了数组切片进行传参，但是，要强调的是，<strong>切片</strong>操作是返回一个全新的列表，意思就是其实我们递归的操作，修改的也是新的列表的内容，与我们的预期是不符的</li>
+</ol>
+<p>稍微总结一下之后，修改代码，得到一个最终的答案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">def qsort(target, start, end):</span><br><span class="line">    # 定义好停止递归的方式</span><br><span class="line">    if start &gt;= end:</span><br><span class="line">        return target</span><br><span class="line">    # 设定当前列表的基准值</span><br><span class="line">    base = target[start]</span><br><span class="line">    low = start</span><br><span class="line">    high = end</span><br><span class="line">    # 开始由两边向中间处理数据，start 我们暂时成为前序游标，end 则为后续游标</span><br><span class="line">    while start &lt; end:</span><br><span class="line">        while start &lt; end and target[end] &gt; base:</span><br><span class="line">            # 后续游标前移继续扫描</span><br><span class="line">            end -= 1</span><br><span class="line">        # 我们找到了一个后续游标，其指向的值小于基准值，那么我们把这个值放到前序游标指向的位置</span><br><span class="line">        target[start] = target[end]</span><br><span class="line">        while start &lt; end and target[start] &lt;= base:</span><br><span class="line">            # 前序游标后移</span><br><span class="line">            start += 1</span><br><span class="line">        # 与上面对应，前序游标指向的值大于基准值，则移到后续游标的位置</span><br><span class="line">        target[end] = target[start]</span><br><span class="line">    # 当前后游标相遇，则表示前后子列表都已经扫完，那么将 base 的值赋予当前游标指向的位置</span><br><span class="line">    target[start] = base</span><br><span class="line">    # 对两边的子列表递归</span><br><span class="line">    qsort(target, low, start - 1)</span><br><span class="line">    qsort(target, start + 1, high)</span><br><span class="line">    return target</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/20190428-Python字典的实用操作记录/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="This is Coding"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/28/20190428-Python字典的实用操作记录/" class="post-title-link" itemprop="url">Python的实用代码记录</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-04-28 15:01:51" itemprop="dateCreated datePublished" datetime="2019-04-28T15:01:51+08:00">2019-04-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-05-17 14:52:58" itemprop="dateModified" datetime="2019-05-17T14:52:58+08:00">2019-05-17</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="反转列表"><a href="#反转列表" class="headerlink" title="反转列表"></a>反转列表</h3><p>列表反转比较简单，列表原生方法 <code>reverse()</code> 既可以实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [1]: a = [1,2,3]</span><br><span class="line"></span><br><span class="line">In [2]: a.reverse()</span><br><span class="line"></span><br><span class="line">In [3]: a</span><br><span class="line">Out[3]: [3, 2, 1]</span><br></pre></td></tr></table></figure>
+<p>如果你想表现得有种来去如风的感觉，而且是想直接反转列表并赋值，也可以这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 因为上面的 a 已经被 reverse 过了</span><br><span class="line">In [4]: a[::-1]</span><br><span class="line">Out[4]: [1, 2, 3]</span><br></pre></td></tr></table></figure>
+<p><code>[::-1]</code>，以 <code>:</code> 分隔，三个部分分别表示开始的索引位置，结束的索引位置，以及步长，<code>[::-1]</code> 其实也是 <code>a[-1:-4:-1]</code> 的简写，当然，你可能事先不知道列表的长度，所以直接 <code>[::-1]</code> 是最简单的写法。</p>
+<h3 id="合并字典"><a href="#合并字典" class="headerlink" title="合并字典"></a>合并字典</h3><p>不多说，先上代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def merge(source, target):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    用于将两个字典进行合并</span><br><span class="line">    :param target: 希望被更新的字典</span><br><span class="line">    :param source: 包含新数据的字典</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    # 将两个字典进行合并，同个字段，由 target 的值覆盖 source 的值，如果不存在，则新增</span><br><span class="line">    # 简化版本，参考网上递归</span><br><span class="line">    for k, v in source.iteritems():</span><br><span class="line">        if isinstance(v, dict):</span><br><span class="line">            node = target.setdefault(k, &#123;&#125;)</span><br><span class="line">            merge(v, node)</span><br><span class="line">        else:</span><br><span class="line">            target[k] = v</span><br><span class="line">    return target</span><br></pre></td></tr></table></figure>
+<p>代码是很简单的迭代思路，值得注意的是，<code>setdefault()</code> 方法的使用。</p>
+<p>其实之前本人是对这个方法的使用时有所误解的，只是简单的认为这个方法是当字典中<code>指定的某个 key 不存在时，则增加这个 key 并赋值</code>，但是其实，这个方法是<strong>有返回值</strong>的，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">key 不存在，则设定这个 key 的值为 setdefault() 方法中第二个参数的值，并返回</span><br><span class="line">key 存在，则直接返回这个 key 的值，并且，不会用第二个参数的值去覆盖原有的值!!!</span><br></pre></td></tr></table></figure>
+<p>所以，setdefault() 成为了这个 merge() 方法的核心。另外一点就是，我们获取的值，即 node，是本身 target 字典中对应”节点”的引用，所以修改 node 的内容，会直接改变 target 这个传入的字典。</p>
+<h3 id="扁平化与反扁平化字典"><a href="#扁平化与反扁平化字典" class="headerlink" title="扁平化与反扁平化字典"></a>扁平化与反扁平化字典</h3><p>扁平化字典的需求，其实是在做开发的时候遇到的问题，就是希望把一个嵌套类型的字典，如 <code>{&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 1}}}</code>，转换成为如<code>{&#39;a.b.c&#39;: 1}</code>这种形式，其根本目的是希望能够让前端的程序，在列表中，更好的展现这个字典的内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">def function(data):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    用于将复杂的结构转换为友好的字段名格式</span><br><span class="line">    :param data:</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    stack = [((), data)]</span><br><span class="line">    result = []</span><br><span class="line">    while stack:</span><br><span class="line">        field_name, current = stack.pop()</span><br><span class="line">        for k, v in current.iteritems():</span><br><span class="line">            if isinstance(v, dict):</span><br><span class="line">                stack.append((field_name + (k,), v))</span><br><span class="line">            else:</span><br><span class="line">                result.append(&#123;</span><br><span class="line">                    &quot;.&quot;.join((field_name + (k,))): v</span><br><span class="line">                &#125;)</span><br><span class="line">    return sorted(result, key=lambda t: t[0])</span><br></pre></td></tr></table></figure>
+<p>代码整体的思路比较简单，首先设定一个限于函数内存的栈，用来缓存处理的信息，而推入栈中的内容，是一个元组，包含以下两个项：</p>
+<ol>
+<li>当前的字段列表，即能够表明，这个元组表示的是字典中的哪一个节点</li>
+<li>该节点的内容，即表示，在这一层中，数据的内容是什么</li>
+</ol>
+<p>那么捋一捋之后就比较清楚整体的逻辑了，即从整个字典开始扫，如果发现下一层元素的值仍然是个字典，那么，将这个元素的 key 以及 value 放到 stack 中，等待 while 循环进行处理。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/11/20180711-查看Linux进程占用内存/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="This is Coding"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/07/11/20180711-查看Linux进程占用内存/" class="post-title-link" itemprop="url">查看Linux进程占用内存</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-11 11:04:27" itemprop="dateCreated datePublished" datetime="2018-07-11T11:04:27+08:00">2018-07-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-05-17 14:53:18" itemprop="dateModified" datetime="2019-05-17T14:53:18+08:00">2019-05-17</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>用了这么久 Linux，当有人问起一些基础的指令问题的时候，还是会愣一下。回头想想，现在老了，记性不好了，对于不常用的东西，还是找个地方把他存盘好一点。</p>
+</blockquote>
+<h3 id="方便快捷-PS"><a href="#方便快捷-PS" class="headerlink" title="方便快捷 - PS"></a>方便快捷 - PS</h3><p>查看内存使用，我们可能第一时间想到的是用 top，但是像我这种半吊子来说，top 在我脑海中始终是那个充满着一堆动态变化数据的表格。那些在界面中的各种复杂骚操作早已忘得一干二净。回过头来，其实 Linux 中最常用的指令 <code>ps</code>，就能够满足需求。</p>
+<p>话不多说，先上指令:</p>
+<p>  <code>ps -eo rss,pmem,pcpu,vsize,args</code></p>
+<p>上面的指令就是对进程信息进行格式化输出，<code>-o</code>参数，加上后面的字段，指定了我们希望输出的信息。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rss: resident set size 的缩写，表示进程占用的内存大小，以 KB 为单位</span><br><span class="line">pmem: percentage of memory，表示内存占用百分比</span><br><span class="line">pcpu: percentage of cpu usage，表示 cpu 占用百分比</span><br><span class="line">vsize: 表示进程占用虚拟内存大小，以 KB 为单位</span><br><span class="line">args: 进程名，或者指令的名称</span><br></pre></td></tr></table></figure>
+<p>上面这几个参数是我们最经常用到的，那么如果我们要使用其中某个数值字段进行排序，我们会用到<code>sort</code>指令</p>
+<p>  <code>ps -eo rss,pmem,pcpu,vsize,args | sort -k 1 -r -n | less</code></p>
+<p>上面<code>-k</code>参数表示的是我需要按照管道传入数据的第几列数据进行排序，另外两个参数不累述。</p>
+<h3 id="清晰详细-TOP"><a href="#清晰详细-TOP" class="headerlink" title="清晰详细 - TOP"></a>清晰详细 - TOP</h3><p>top 的话本人用的比较少，下面简单的总结记录一下。</p>
+<p>使用 top 查看进程的内存占用等信息，首先我们可以用 ps 指令找出进程的 pid</p>
+<p>  <code>ps aux | awk &#39;/&lt;process_name&gt;/&#39;</code></p>
+<blockquote>
+<p>这里值得注意的是，其实 <code>ps aux</code> 输出的第 3、4 列，就已经分别表示了进程的 CPU 以及内存的占用率(百分比)，第 5、6 列，则是 VSZ、RSS，即虚拟内存占用大小（virtual memory size，和实际内存占用大小（resident set size）</p>
+</blockquote>
+<p>然后使用如下指令</p>
+<p>  <code>top -p &lt;pid&gt;</code></p>
+<blockquote>
+<p>PS: 进入到 top 的交互界面时，按 <code>c</code> 键的话，可以看到完整的 command，此时如果再按 <code>shift + w</code> 的话，就能记住此配置，以便下次打开时直接显示完整的 command。</p>
+</blockquote>
+<h3 id="更进一步"><a href="#更进一步" class="headerlink" title="更进一步"></a>更进一步</h3><p>其实很多情况下，无论在服务器排查故障或者调查应用的性能问题时，不仅仅需要到进程的层面，而需要更深入的查看线程的资源使用情况。</p>
+<p>那么我们如何查看线程的资源占用情况呢。</p>
+<p>对于 top，我们可以在参数后加上 <code>-H</code>，即</p>
+<p>  <code>top -Hp &lt;pid&gt;</code></p>
+<p>同样，对于 ps 指令，同样可以加上 <code>H</code> 参数</p>
+<p>  <code>ps H -eo rss,pmem,pcpu,vsize,args  | sort -k 1 -r -n</code></p>
+<p>如果希望查看一个进程树的情况，我们在知道进程名称的情况下，可以使用如下指令查看</p>
+<p>  <code>ps -ef f | grep &lt;process_name&gt;</code></p>
+<p>但是有些情况下上述指令是不准的，因为线程并没包括所属进程的名称，那么我们就可以使用下面的指令</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps -Lf &lt;pid&gt;</span><br><span class="line"></span><br><span class="line">-L: Show threads, possibly with LWP and NLWP columns.</span><br></pre></td></tr></table></figure>
+<p>以上就是 Linux 使用时查看进程、线程信息的一些基本指令介绍了，更多的会在以后的使用过程中再进行补充。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="This is Coding"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/" class="post-title-link" itemprop="url">使用Hexo与GitHub搭建简易博客</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-03 15:06:19" itemprop="dateCreated datePublished" datetime="2018-07-03T15:06:19+08:00">2018-07-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-05-17 14:53:33" itemprop="dateModified" datetime="2019-05-17T14:53:33+08:00">2019-05-17</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>说了很久想自己写一个个人博客，但是无奈就是患有拖延症，现在才想到逐渐补上。那好，就直接从怎样搭建现在这个简易博客说起。</p>
+</blockquote>
+<p>能够快速地搭建起这一个博客，非常感谢的是前辈们给出的相关文档。更多的，是依赖于 Hexo 这个开源框架，以及 GitHub 这个为广大程序员所熟知的平台。下面先简单介绍下他们的作用（其实更多的是记录给自己看）</p>
+<hr>
+<h3 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h3><p><a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> 是 GitHub 所提供的免费博客托管平台，并且有 GitHub 免费提供的域名，例如 <a href="https://username.github.io/，" target="_blank" rel="noopener">https://username.github.io/，</a><br>很大程度上减少了维护一个个人博客的成本。其本质上来说，就是静态网站的托管服务器。</p>
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 是一个快速搭建博客的框架，依赖于 Node.js，拥有丰富多彩的<a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题</a>，能够直接将撰写好的 MarkDown 文件编译成为静态文件，嵌入到网站整体当中。</p>
+<p>同时，Hexo 还能方便的与 GitHub Pages 结合，使用其封装好的 <code>hexo-cli</code> 命令行工具，一键部署更新后的代码到各个平台。</p>
+<hr>
+<h3 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h3><blockquote>
+<p>事先声明，以下内容针对 Mac 用户，如果你不是 Mac 用户，那么欢迎<a href="https://osx.cx/2016-clover-macos-sierra10-12-1-jiaocheng.html" target="_blank" rel="noopener">摇身一变</a>成为 Mac 用户。</p>
+</blockquote>
+<p>首先，先完成 GitHub Pages 的配置。根据官方文档，其实步骤很简单。</p>
+<ul>
+<li>在 GitHub 创建名为 <code>username.github.io</code> 的仓库，这里的 <code>username</code> 使用自己 GitHub 的用户名进行替换</li>
+<li>然后在心里默念仓库地址 10 遍，等下要用到，<code>https://github.com/username/username.github.io</code></li>
+</ul>
+<p>关于 GitHub Pages 所需要做的，其实就是这么多。接下来，就是要使用 Hexo，创建博客网站，并提交到 <code>username.github.io</code> 这个仓库就可以了。</p>
+<p>接下来，我们开始关键的步骤（这里假定我们已经是 GitHub 的熟手，早已完成了 SSH key 以及其他繁杂的配置）。</p>
+<ul>
+<li><p>安装 hexo</p>
+<p>如果你已经安装了 <code>npm</code>，那么恭喜你，一行命令解千愁。</p>
+<p><code>npm install -g hexo</code></p>
+<p>如果还没有，而且你是苹果用户，希望你已经装了 <a href="https://brew.sh/" target="_blank" rel="noopener">Homebrew</a>，如果还是没有的话，就点进去看看，安装 5 分钟，排错 2 小时，然后就能用 <code>brew</code> 指令安装 <code>npm</code> 了。编译可能有点久，耐心等等。</p>
+<p><code>brew install npm</code></p>
+</li>
+<li><p>创建 hexo 项目</p>
+<p>执行下面指令，项目名称自由发挥，我比较低调，就叫了 blog。</p>
+<p><code>hexo init blog</code></p>
+<p>然后到项目目录下，安装依赖</p>
+<p><code>npm install</code></p>
+<p>这时候，其实你也同样可以为 hexo 项目的源码创建一个独立的 git 仓库（不是刚刚的 <code>username.github.io</code>），方便对 hexo 的源码进行管理，包括你引入、修改主题，以及你创建的 MarkDown 文档。</p>
+</li>
+<li><p>配置 hexo 项目</p>
+<p>初始化完成后，会在项目目录下发现名为 <code>_config.yml</code> 的文件，用你喜欢的任何编辑器打开它，修改其中的内容。</p>
+<p>找到下面这一段配置，然后回忆一下刚刚默念过 10 遍的 GitHub Pages 的项目地址，大胆的填进去。当然，你也可以定制化分支，通常情况下没这个必要。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/username/username.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+<p>这段配置就是告诉 hexo，它到时候编译出来的静态文件应该推送到哪里。最关键的配置其实就是这里，这里记得配置好 git 所用的 SSH key，不然是不能自动推送上去的。</p>
+<p>至于主题，也是在配置文件中指定。例如我使用的就是 <a href="https://github.com/yanm1ng/hexo-theme-vexo" target="_blank" rel="noopener">vexo</a>，在主题自己的官网，能根据文档快速的将其引入到你自己的 hexo 项目中。</p>
+</li>
+</ul>
+<hr>
+<h3 id="大功告成"><a href="#大功告成" class="headerlink" title="大功告成"></a>大功告成</h3><p>好了，该装的已经装了，该配的已经配了。那我们就开始撰写自己的博客，并推送到服务器上吧。</p>
+<ul>
+<li><p>创建博文</p>
+<p>使用指令 <code>hexo new article_name</code>，创建一篇博文，你会在 <code>source/_posts</code> 目录下，找到对应的 MarkDown 文件。</p>
+<p>打开该文件，默认会生成以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: article_name</span><br><span class="line">date: 2018-07-03 15:06:19</span><br><span class="line">tags:</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p><code>tags</code> 中你可以随意的加入自己的分类标签。</p>
+</li>
+<li><p>生成和部署</p>
+<p>写完博文之后，运行下面的快捷命令，hexo 框架就会生成静态文件，并且部署到你指定的 GitHub Pages 仓库。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d -g # generate and deploy</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>静静等待</p>
+<p>现在你就可以访问 <code>https://username.github.io/</code> 查看自己的博客网站了。根据实测，将静态文件推送到仓库，到真正显示更新后的内容，大约需要半分钟到一分钟，所以，喝口茶、检查下错别字，确认下自己提交的内容准确无误吧。</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+
+
+          </div>
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
-</header>
 
-    <main class="app-body">
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/05/17/20190517-vim中的正则替换/">vim中的正则替换</a>
-      </h2>
-      <p class="article-date">May 17, 2019</p>
-      
-        
-  <a href="/tags#技术沉淀" >
-    <span class="tag-code">技术沉淀</span>
-  </a>
-
-  <a href="/tags#Linux" >
-    <span class="tag-code">Linux</span>
-  </a>
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
 
       
-      <div class="article-summary">
-        
-          踩坑实录其实说是踩坑，其本质上是对于 vim 的不熟悉。
-起因是在于相对一个 SQL 文件内容进行批量更改，至于更改的原因，是导出了线上的数据，希望导入到测试数据库时，json 类型的字段发生了报错，网上也有对应解答，具体的报错分析看在之后专门写一篇分析分析
-根据网上给出的报错解决办法，我需 ...
-        
-      </div>
-      <a class="more" href="/2019/05/17/20190517-vim中的正则替换/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/05/17/sed正则替换/">sed正则替换</a>
-      </h2>
-      <p class="article-date">May 17, 2019</p>
-      
-        
-  <a href="/tags#技术沉淀" >
-    <span class="tag-code">技术沉淀</span>
-  </a>
 
       
-      <div class="article-summary">
-        
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Keefe Lin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
           
-        
-      </div>
-      <a class="more" href="/2019/05/17/sed正则替换/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/04/28/20190428-用Python来描述一些基本算法--排序篇/">用Python来描述一些基本算法--排序篇</a>
-      </h2>
-      <p class="article-date">April 28, 2019</p>
-      
-        
-  <a href="/tags#技术沉淀" >
-    <span class="tag-code">技术沉淀</span>
-  </a>
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
 
-  <a href="/tags#编程语言" >
-    <span class="tag-code">编程语言</span>
-  </a>
+              
 
-  <a href="/tags#Python" >
-    <span class="tag-code">Python</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          初衷本身不是学计算机出身，所以说一些基本的概念还是比较薄弱的。很多次被问到一些基础的算法问题，其实脑海中都有印象自己看过，但是有时候就是想不起来。
-用的少不是借口(虽然在开发过程中确实用的少)，现在看来，这些基础的算法概念，是对一个人逻辑思维的展现。其实思考这些算法的实现过程，也是一个“重复 ...
-        
-      </div>
-      <a class="more" href="/2019/04/28/20190428-用Python来描述一些基本算法--排序篇/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/04/28/20190428-Python字典的实用操作记录/">Python的实用代码记录</a>
-      </h2>
-      <p class="article-date">April 28, 2019</p>
-      
-        
-  <a href="/tags#技术沉淀" >
-    <span class="tag-code">技术沉淀</span>
-  </a>
-
-  <a href="/tags#编程语言" >
-    <span class="tag-code">编程语言</span>
-  </a>
-
-  <a href="/tags#Python" >
-    <span class="tag-code">Python</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          反转列表列表反转比较简单，列表原生方法 reverse() 既可以实现
-123456In [1]: a = [1,2,3]In [2]: a.reverse()In [3]: aOut[3]: [3, 2, 1]
-如果你想表现得有种来去如风的感觉，而且是想直接反转列表并赋值，也可以这样
-12 ...
-        
-      </div>
-      <a class="more" href="/2019/04/28/20190428-Python字典的实用操作记录/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/07/11/20180711-查看Linux进程占用内存/">查看Linux进程占用内存</a>
-      </h2>
-      <p class="article-date">July 11, 2018</p>
-      
-        
-  <a href="/tags#技术沉淀" >
-    <span class="tag-code">技术沉淀</span>
-  </a>
-
-  <a href="/tags#Linux" >
-    <span class="tag-code">Linux</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
           
-用了这么久 Linux，当有人问起一些基础的指令问题的时候，还是会愣一下。回头想想，现在老了，记性不好了，对于不常用的东西，还是找个地方把他存盘好一点。
 
-方便快捷 - PS查看内存使用，我们可能第一时间想到的是用 top，但是像我这种半吊子来说，top 在我脑海中始终是那个充满着一堆动态 ...
-        
-      </div>
-      <a class="more" href="/2018/07/11/20180711-查看Linux进程占用内存/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/">使用Hexo与GitHub搭建简易博客</a>
-      </h2>
-      <p class="article-date">July 3, 2018</p>
-      
-        
-  <a href="/tags#技术沉淀" >
-    <span class="tag-code">技术沉淀</span>
-  </a>
-
-  <a href="/tags#Linux" >
-    <span class="tag-code">Linux</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
           
-说了很久想自己写一个个人博客，但是无奈就是患有拖延症，现在才想到逐渐补上。那好，就直接从怎样搭建现在这个简易博客说起。
 
-能够快速地搭建起这一个博客，非常感谢的是前辈们给出的相关文档。更多的，是依赖于 Hexo 这个开源框架，以及 GitHub 这个为广大程序员所熟知的平台。下面先简单介绍 ...
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
         
       </div>
-      <a class="more" href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/">Read more</a>
-    </article>
-  
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Keefe Lin</span>
 
   
-</main>
 
-
-    <div class="scroll-top">
-  <span class="arrow-icon"></span>
+  
 </div>
-    <footer class="app-footer">
-  <p class="copyright">
-    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
-    <br>
-    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
-  </p>
-</footer>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
 
 <script>
-  function async(u, c) {
-    var d = document, t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
   }
 </script>
-<script>
-  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-    FastClick.attach(document.body);
-  })
-</script>
 
-<script>
-  var hasLine = 'true';
-  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
-    $('figure pre').each(function(i, block) {
-      var figure = $(this).parents('figure');
-      if (hasLine === 'false') {
-        figure.find('.gutter').hide();
-      }
-      var lang = figure.attr('class').split(' ')[1] || 'code';
-      var codeHtml = $(this).html();
-      var codeTag = document.createElement('code');
-      codeTag.className = lang;
-      codeTag.innerHTML = codeHtml;
-      $(this).attr('class', '').empty().html(codeTag);
-      figure.attr('data-lang', lang.toUpperCase());
-      hljs.highlightBlock(block);
-    });
-  })
-</script>
-<!-- Baidu Tongji -->
 
-<script src="/js/script.js"></script>
-  </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.1"></script>
+
+
+
+  
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
 </html>
