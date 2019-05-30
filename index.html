@@ -286,6 +286,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/30/20190530-celery使用踩坑记录/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hackerose"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/30/20190530-celery使用踩坑记录/" class="post-title-link" itemprop="url">20190530-celery使用踩坑记录</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-30 14:47:06 / Modified: 16:39:00" itemprop="dateCreated datePublished" datetime="2019-05-30T14:47:06+08:00">2019-05-30</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>线上调用接口，执行一些异步任务时，celery 的任务始终没有被触发，下面把排查过程以及之后对于此问题的一个理解进行一下总结</p>
+</blockquote>
+<h4 id="修复过程"><a href="#修复过程" class="headerlink" title="修复过程"></a>修复过程</h4><p>其实很简单，异步任务接口被触发时，会执行一个 <code>deploy()</code> 方法，让 celery 去执行一些 ansible 任务，但是看 celery 的日志始终没有触发任务。</p>
+<p>而其它的异步任务，都是能够正常执行的，所以排除设置上或者应用层面的一些错误。</p>
+<p>既然是有问题，那就与执行正常的代码对比一下，发现有问题的方法内触发 celery task 时，调用的 <code>apply_async()</code>，与其它正常执行的调用少了 <code>serializer=&#39;json&#39;</code> 参数。</p>
+<p>加上这个参数后，就能正常执行了。</p>
+<h4 id="原因探究"><a href="#原因探究" class="headerlink" title="原因探究"></a>原因探究</h4><p>虽然解决了问题，但是还是要看下为什么这里要加上 <code>serializer=&#39;json&#39;</code> 这个参数。</p>
+<p>首先，目前我们使用的 celery 版本是 <code>3.1.24</code>，查询<a href="http://docs.celeryproject.org/en/3.1/userguide/calling.html#calling-serializers" target="_blank" rel="noopener">相关文档</a>，很容易就能找到如下描述</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Data transferred between clients and workers needs to be serialized, so every message in Celery has a content_type header that describes the serialization method used to encode it.</span><br><span class="line"></span><br><span class="line">The default serializer is pickle, but you can change this using the CELERY_TASK_SERIALIZER setting, or for each individual task, or even per message.</span><br><span class="line"></span><br><span class="line">There’s built-in support for pickle, JSON, YAML and msgpack, and you can also add your own custom serializers by registering them into the Kombu serializer registry (see ref:kombu:guide-serialization).</span><br></pre></td></tr></table></figure>
+<p>找遍代码，没有全局的 <strong>CELERY_TASK_SERIALIZER</strong> 设定，所以每一个 task 就需要去设定 <code>serializer</code> 了，不然会默认使用 <code>pickle</code>.</p>
+<p>但是，为什么默认 pickle 不行呢？文档中指出，<code>pickle</code> 是一个不安全的持久化方案，且 celery 可以通过 <strong>CELERY_ACCEPT_CONTENT</strong> 这个变量去作为白名单，只允许白名单中的持久化方案被用作 worker 和 client 之间的通信。</p>
+<p>所以回头看配置文件，其中包含了这个白名单的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELERY_ACCEPT_CONTENT = [&apos;json&apos;, ]</span><br></pre></td></tr></table></figure>
+<p>所以一开始是出于安全考虑，仅可以支持 json 持久化方式去传递数据，在方法中未指定 <code>serializer</code> 的情况下，celery 库就自动终止了 client 发起的任务，导致后续的任务没有被执行。</p>
+<h4 id="总结回顾"><a href="#总结回顾" class="headerlink" title="总结回顾"></a>总结回顾</h4><p>为什么使用 <code>pickle</code> 的持久化方式会存在安全隐患？这个又是后续的一个问题。</p>
+<p>根据官方文档，提供了一个分析 <code>pickle</code> 存在的隐患的<a href="https://blog.nelhage.com/2011/03/exploiting-pickle/" target="_blank" rel="noopener">博客</a>。</p>
+<p>值得注意的是这一段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pickle allows arbitrary objects to declare how they should be pickled by defining a __reduce__ method, which should return either a string or a tuple describing how to reconstruct this object on unpacking.</span><br></pre></td></tr></table></figure>
+<p>简单来说，利用 pickle 库的特性，在客户端持久化数据前，定义一个改写过 <code>__reduce__</code> 方法的类，在服务端接收到这个数据时，会调用这个方法，很可能被被恶意代码启动一个危险的进程，导致服务器被黑。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/17/20190517-vim中的正则替换/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1230,7 +1392,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

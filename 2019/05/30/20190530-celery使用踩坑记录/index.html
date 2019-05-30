@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="用了这么久 Linux，当有人问起一些基础的指令问题的时候，还是会愣一下。回头想想，现在老了，记性不好了，对于不常用的东西，还是找个地方把他存盘好一点。  方便快捷 - PS查看内存使用，我们可能第一时间想到的是用 top，但是像我这种半吊子来说，top 在我脑海中始终是那个充满着一堆动态变化数据的表格。那些在界面中的各种复杂骚操作早已忘得一干二净。回过头来，其实 Linux 中最常用的指令 p">
-<meta name="keywords" content="技术沉淀,Linux">
+  <meta name="description" content="线上调用接口，执行一些异步任务时，celery 的任务始终没有被触发，下面把排查过程以及之后对于此问题的一个理解进行一下总结  修复过程其实很简单，异步任务接口被触发时，会执行一个 deploy() 方法，让 celery 去执行一些 ansible 任务，但是看 celery 的日志始终没有触发任务。 而其它的异步任务，都是能够正常执行的，所以排除设置上或者应用层面的一些错误。 既然是有问题，">
+<meta name="keywords" content="技术沉淀,编程语言,Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="查看Linux进程占用内存">
-<meta property="og:url" content="http://yoursite.com/2018/07/11/20180711-查看Linux进程占用内存/index.html">
+<meta property="og:title" content="20190530-celery使用踩坑记录">
+<meta property="og:url" content="http://yoursite.com/2019/05/30/20190530-celery使用踩坑记录/index.html">
 <meta property="og:site_name" content="Hackerose">
-<meta property="og:description" content="用了这么久 Linux，当有人问起一些基础的指令问题的时候，还是会愣一下。回头想想，现在老了，记性不好了，对于不常用的东西，还是找个地方把他存盘好一点。  方便快捷 - PS查看内存使用，我们可能第一时间想到的是用 top，但是像我这种半吊子来说，top 在我脑海中始终是那个充满着一堆动态变化数据的表格。那些在界面中的各种复杂骚操作早已忘得一干二净。回过头来，其实 Linux 中最常用的指令 p">
+<meta property="og:description" content="线上调用接口，执行一些异步任务时，celery 的任务始终没有被触发，下面把排查过程以及之后对于此问题的一个理解进行一下总结  修复过程其实很简单，异步任务接口被触发时，会执行一个 deploy() 方法，让 celery 去执行一些 ansible 任务，但是看 celery 的日志始终没有触发任务。 而其它的异步任务，都是能够正常执行的，所以排除设置上或者应用层面的一些错误。 既然是有问题，">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-17T06:53:18.000Z">
+<meta property="og:updated_time" content="2019-05-30T08:39:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="查看Linux进程占用内存">
-<meta name="twitter:description" content="用了这么久 Linux，当有人问起一些基础的指令问题的时候，还是会愣一下。回头想想，现在老了，记性不好了，对于不常用的东西，还是找个地方把他存盘好一点。  方便快捷 - PS查看内存使用，我们可能第一时间想到的是用 top，但是像我这种半吊子来说，top 在我脑海中始终是那个充满着一堆动态变化数据的表格。那些在界面中的各种复杂骚操作早已忘得一干二净。回过头来，其实 Linux 中最常用的指令 p">
+<meta name="twitter:title" content="20190530-celery使用踩坑记录">
+<meta name="twitter:description" content="线上调用接口，执行一些异步任务时，celery 的任务始终没有被触发，下面把排查过程以及之后对于此问题的一个理解进行一下总结  修复过程其实很简单，异步任务接口被触发时，会执行一个 deploy() 方法，让 celery 去执行一些 ansible 任务，但是看 celery 的日志始终没有触发任务。 而其它的异步任务，都是能够正常执行的，所以排除设置上或者应用层面的一些错误。 既然是有问题，">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2018/07/11/20180711-查看Linux进程占用内存/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/05/30/20190530-celery使用踩坑记录/"/>
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>查看Linux进程占用内存 | Hackerose</title>
+  <title>20190530-celery使用踩坑记录 | Hackerose</title>
   
 
 
@@ -290,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/11/20180711-查看Linux进程占用内存/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/30/20190530-celery使用踩坑记录/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Keefe Lin"/>
@@ -307,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">查看Linux进程占用内存
+          <h1 class="post-title" itemprop="name headline">20190530-celery使用踩坑记录
 
               
             
@@ -333,24 +333,12 @@
                 
               
 
-              <time title="Created: 2018-07-11 11:04:27" itemprop="dateCreated datePublished" datetime="2018-07-11T11:04:27+08:00">2018-07-11</time>
+              <time title="Created: 2019-05-30 14:47:06 / Modified: 16:39:00" itemprop="dateCreated datePublished" datetime="2019-05-30T14:47:06+08:00">2019-05-30</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-05-17 14:53:18" itemprop="dateModified" datetime="2019-05-17T14:53:18+08:00">2019-05-17</time>
               
             
           </span>
@@ -385,38 +373,25 @@
 
       
         <blockquote>
-<p>用了这么久 Linux，当有人问起一些基础的指令问题的时候，还是会愣一下。回头想想，现在老了，记性不好了，对于不常用的东西，还是找个地方把他存盘好一点。</p>
+<p>线上调用接口，执行一些异步任务时，celery 的任务始终没有被触发，下面把排查过程以及之后对于此问题的一个理解进行一下总结</p>
 </blockquote>
-<h3 id="方便快捷-PS"><a href="#方便快捷-PS" class="headerlink" title="方便快捷 - PS"></a>方便快捷 - PS</h3><p>查看内存使用，我们可能第一时间想到的是用 top，但是像我这种半吊子来说，top 在我脑海中始终是那个充满着一堆动态变化数据的表格。那些在界面中的各种复杂骚操作早已忘得一干二净。回过头来，其实 Linux 中最常用的指令 <code>ps</code>，就能够满足需求。</p>
-<p>话不多说，先上指令:</p>
-<p>  <code>ps -eo rss,pmem,pcpu,vsize,args</code></p>
-<p>上面的指令就是对进程信息进行格式化输出，<code>-o</code>参数，加上后面的字段，指定了我们希望输出的信息。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rss: resident set size 的缩写，表示进程占用的内存大小，以 KB 为单位</span><br><span class="line">pmem: percentage of memory，表示内存占用百分比</span><br><span class="line">pcpu: percentage of cpu usage，表示 cpu 占用百分比</span><br><span class="line">vsize: 表示进程占用虚拟内存大小，以 KB 为单位</span><br><span class="line">args: 进程名，或者指令的名称</span><br></pre></td></tr></table></figure>
-<p>上面这几个参数是我们最经常用到的，那么如果我们要使用其中某个数值字段进行排序，我们会用到<code>sort</code>指令</p>
-<p>  <code>ps -eo rss,pmem,pcpu,vsize,args | sort -k 1 -r -n | less</code></p>
-<p>上面<code>-k</code>参数表示的是我需要按照管道传入数据的第几列数据进行排序，另外两个参数不累述。</p>
-<h3 id="清晰详细-TOP"><a href="#清晰详细-TOP" class="headerlink" title="清晰详细 - TOP"></a>清晰详细 - TOP</h3><p>top 的话本人用的比较少，下面简单的总结记录一下。</p>
-<p>使用 top 查看进程的内存占用等信息，首先我们可以用 ps 指令找出进程的 pid</p>
-<p>  <code>ps aux | awk &#39;/&lt;process_name&gt;/&#39;</code></p>
-<blockquote>
-<p>这里值得注意的是，其实 <code>ps aux</code> 输出的第 3、4 列，就已经分别表示了进程的 CPU 以及内存的占用率(百分比)，第 5、6 列，则是 VSZ、RSS，即虚拟内存占用大小（virtual memory size，和实际内存占用大小（resident set size）</p>
-</blockquote>
-<p>然后使用如下指令</p>
-<p>  <code>top -p &lt;pid&gt;</code></p>
-<blockquote>
-<p>PS: 进入到 top 的交互界面时，按 <code>c</code> 键的话，可以看到完整的 command，此时如果再按 <code>shift + w</code> 的话，就能记住此配置，以便下次打开时直接显示完整的 command。</p>
-</blockquote>
-<h3 id="更进一步"><a href="#更进一步" class="headerlink" title="更进一步"></a>更进一步</h3><p>其实很多情况下，无论在服务器排查故障或者调查应用的性能问题时，不仅仅需要到进程的层面，而需要更深入的查看线程的资源使用情况。</p>
-<p>那么我们如何查看线程的资源占用情况呢。</p>
-<p>对于 top，我们可以在参数后加上 <code>-H</code>，即</p>
-<p>  <code>top -Hp &lt;pid&gt;</code></p>
-<p>同样，对于 ps 指令，同样可以加上 <code>H</code> 参数</p>
-<p>  <code>ps H -eo rss,pmem,pcpu,vsize,args  | sort -k 1 -r -n</code></p>
-<p>如果希望查看一个进程树的情况，我们在知道进程名称的情况下，可以使用如下指令查看</p>
-<p>  <code>ps -ef f | grep &lt;process_name&gt;</code></p>
-<p>但是有些情况下上述指令是不准的，因为线程并没包括所属进程的名称，那么我们就可以使用下面的指令</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps -Lf &lt;pid&gt;</span><br><span class="line"></span><br><span class="line">-L: Show threads, possibly with LWP and NLWP columns.</span><br></pre></td></tr></table></figure>
-<p>以上就是 Linux 使用时查看进程、线程信息的一些基本指令介绍了，更多的会在以后的使用过程中再进行补充。</p>
+<h4 id="修复过程"><a href="#修复过程" class="headerlink" title="修复过程"></a>修复过程</h4><p>其实很简单，异步任务接口被触发时，会执行一个 <code>deploy()</code> 方法，让 celery 去执行一些 ansible 任务，但是看 celery 的日志始终没有触发任务。</p>
+<p>而其它的异步任务，都是能够正常执行的，所以排除设置上或者应用层面的一些错误。</p>
+<p>既然是有问题，那就与执行正常的代码对比一下，发现有问题的方法内触发 celery task 时，调用的 <code>apply_async()</code>，与其它正常执行的调用少了 <code>serializer=&#39;json&#39;</code> 参数。</p>
+<p>加上这个参数后，就能正常执行了。</p>
+<h4 id="原因探究"><a href="#原因探究" class="headerlink" title="原因探究"></a>原因探究</h4><p>虽然解决了问题，但是还是要看下为什么这里要加上 <code>serializer=&#39;json&#39;</code> 这个参数。</p>
+<p>首先，目前我们使用的 celery 版本是 <code>3.1.24</code>，查询<a href="http://docs.celeryproject.org/en/3.1/userguide/calling.html#calling-serializers" target="_blank" rel="noopener">相关文档</a>，很容易就能找到如下描述</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Data transferred between clients and workers needs to be serialized, so every message in Celery has a content_type header that describes the serialization method used to encode it.</span><br><span class="line"></span><br><span class="line">The default serializer is pickle, but you can change this using the CELERY_TASK_SERIALIZER setting, or for each individual task, or even per message.</span><br><span class="line"></span><br><span class="line">There’s built-in support for pickle, JSON, YAML and msgpack, and you can also add your own custom serializers by registering them into the Kombu serializer registry (see ref:kombu:guide-serialization).</span><br></pre></td></tr></table></figure>
+<p>找遍代码，没有全局的 <strong>CELERY_TASK_SERIALIZER</strong> 设定，所以每一个 task 就需要去设定 <code>serializer</code> 了，不然会默认使用 <code>pickle</code>.</p>
+<p>但是，为什么默认 pickle 不行呢？文档中指出，<code>pickle</code> 是一个不安全的持久化方案，且 celery 可以通过 <strong>CELERY_ACCEPT_CONTENT</strong> 这个变量去作为白名单，只允许白名单中的持久化方案被用作 worker 和 client 之间的通信。</p>
+<p>所以回头看配置文件，其中包含了这个白名单的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELERY_ACCEPT_CONTENT = [&apos;json&apos;, ]</span><br></pre></td></tr></table></figure>
+<p>所以一开始是出于安全考虑，仅可以支持 json 持久化方式去传递数据，在方法中未指定 <code>serializer</code> 的情况下，celery 库就自动终止了 client 发起的任务，导致后续的任务没有被执行。</p>
+<h4 id="总结回顾"><a href="#总结回顾" class="headerlink" title="总结回顾"></a>总结回顾</h4><p>为什么使用 <code>pickle</code> 的持久化方式会存在安全隐患？这个又是后续的一个问题。</p>
+<p>根据官方文档，提供了一个分析 <code>pickle</code> 存在的隐患的<a href="https://blog.nelhage.com/2011/03/exploiting-pickle/" target="_blank" rel="noopener">博客</a>。</p>
+<p>值得注意的是这一段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pickle allows arbitrary objects to declare how they should be pickled by defining a __reduce__ method, which should return either a string or a tuple describing how to reconstruct this object on unpacking.</span><br></pre></td></tr></table></figure>
+<p>简单来说，利用 pickle 库的特性，在客户端持久化数据前，定义一个改写过 <code>__reduce__</code> 方法的类，在服务端接收到这个数据时，会调用这个方法，很可能被被恶意代码启动一个危险的进程，导致服务器被黑。</p>
 
       
     </div>
@@ -442,7 +417,9 @@
           
             <a href="/tags/技术沉淀/" rel="tag"># 技术沉淀</a>
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
+            <a href="/tags/编程语言/" rel="tag"># 编程语言</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
         </div>
       
@@ -455,8 +432,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/" rel="next" title="使用Hexo与GitHub搭建简易博客">
-                <i class="fa fa-chevron-left"></i> 使用Hexo与GitHub搭建简易博客
+              <a href="/2019/05/17/20190517-vim中的正则替换/" rel="next" title="vim中的正则替换">
+                <i class="fa fa-chevron-left"></i> vim中的正则替换
               </a>
             
           </div>
@@ -464,10 +441,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/28/20190428-Python字典的实用操作记录/" rel="prev" title="Python的实用代码记录">
-                Python的实用代码记录 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -597,7 +570,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#方便快捷-PS"><span class="nav-number">1.</span> <span class="nav-text">方便快捷 - PS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清晰详细-TOP"><span class="nav-number">2.</span> <span class="nav-text">清晰详细 - TOP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更进一步"><span class="nav-number">3.</span> <span class="nav-text">更进一步</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#修复过程"><span class="nav-number">1.</span> <span class="nav-text">修复过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原因探究"><span class="nav-number">2.</span> <span class="nav-text">原因探究</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结回顾"><span class="nav-number">3.</span> <span class="nav-text">总结回顾</span></a></li></ol></div>
             
 
           </div>
