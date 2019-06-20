@@ -286,6 +286,317 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/20/20190620-Javascript中空对象的判断/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hackerose"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/06/20/20190620-Javascript中空对象的判断/" class="post-title-link" itemprop="url">20190620-Javascript中空对象的判断</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-20 16:59:20 / Modified: 18:07:50" itemprop="dateCreated datePublished" datetime="2019-06-20T16:59:20+08:00">2019-06-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天在用 vuejs 时，当判断后端 API 返回为空的时候，发现一个新手（像我一样的新手，只会面向谷歌的编程）可能会遇到的问题，那就是如何判断一个 Object 为空。</p>
+<p>很方便的，我们可以在浏览器的 console 中进行测试，如果以 <code>===</code> 运算符去进行比较，得到的结果不是我们想要的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#125; === &#123;&#125;</span><br><span class="line">false</span><br></pre></td></tr></table></figure>
+<p>但是这种比较方式在 python 中是成立的（当然 python 中是用 <code>==</code>）。我们在这里先分析为什么在 Javascript 中不能这么比较，然后简单思考下为什么在 Python 中则是可以的。</p>
+<h4 id="Javascript-中空对象的判断"><a href="#Javascript-中空对象的判断" class="headerlink" title="Javascript 中空对象的判断"></a>Javascript 中空对象的判断</h4><p>很简单，一句话概括为什么上面的判断方式不行：Javascript 将对象赋值给一个变量的时候，这个变量其实是这个对象的引用。</p>
+<p>通俗一点讲，这个变量表明的是我们的对象储存在内存的哪个地址。对于两个不同的对象，储存的地址当然不同，那么结果就顺理成章的为 <code>false</code>.</p>
+<p>这种行为是与 C 或者 C++ 类似的，所以在 Javascript 中 <strong>切忌对 Object 进行比较</strong>，很容易让你的代码无法达到期望的效果。</p>
+<h4 id="如何判断空对象"><a href="#如何判断空对象" class="headerlink" title="如何判断空对象"></a>如何判断空对象</h4><p>网上能够找到<a href="https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object" target="_blank" rel="noopener">很多方式</a>，这里摘选比较便捷的一种。</p>
+<p>因为代码中引入了 <a href="https://lodash.com/" target="_blank" rel="noopener">lodash库</a>，直接使用库中自带的方法即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_.isEmpty(yourObject)</span><br></pre></td></tr></table></figure>
+<h4 id="为何-Python-就可以"><a href="#为何-Python-就可以" class="headerlink" title="为何 Python 就可以"></a>为何 Python 就可以</h4><p>Python 运行如下代码的结果，返回是 <code>True</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">In [1]: &#123;&#125; == &#123;&#125;</span><br><span class="line">Out[1]: True</span><br><span class="line">In [2]: a = &#123;&#125;</span><br><span class="line">In [3]: b = &#123;&#125;</span><br><span class="line">In [4]: a == b</span><br><span class="line">Out[4]: True</span><br><span class="line">In [5]: c = &#123;&apos;key&apos;: 1&#125;</span><br><span class="line">In [6]: d = &#123;&apos;key&apos;: 1&#125;</span><br><span class="line">In [7]: c == d</span><br><span class="line">Out[7]: True</span><br></pre></td></tr></table></figure>
+<p>我们用的是 Python2，那么参考<a href="https://docs.python.org/2/reference/datamodel.html#object.__eq__" target="_blank" rel="noopener">对应文档</a>，如果我们使用 <code>==</code> 比较两个字典，那么将会调用 <code>dict 类</code> 的 <code>__eq__</code> 方法，这个方法能够自由的去定义比较 Python 对象时候的行为。</p>
+<p>但是，我在文档中没有找到是如何定义这种比较方式的下文了。求助命令行，结果也是令人失望的（Python 的文档果然还是不行啊）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">In [20]: help(c.__eq__)</span><br><span class="line"></span><br><span class="line">Help on method-wrapper object:</span><br><span class="line"></span><br><span class="line">__eq__ = class method-wrapper(object)</span><br><span class="line"> |  Methods defined here:</span><br><span class="line"> |</span><br><span class="line"> |  __call__(...)</span><br><span class="line"> |      x.__call__(...) &lt;==&gt; x(...)</span><br><span class="line"> |</span><br><span class="line"> |  __cmp__(...)</span><br><span class="line"> |      x.__cmp__(y) &lt;==&gt; cmp(x,y)</span><br><span class="line"> |</span><br><span class="line"> |  __getattribute__(...)</span><br><span class="line"> |      x.__getattribute__(&apos;name&apos;) &lt;==&gt; x.name</span><br><span class="line"> |</span><br><span class="line"> |  __hash__(...)</span><br><span class="line"> |      x.__hash__() &lt;==&gt; hash(x)</span><br><span class="line"> |</span><br><span class="line"> |  __repr__(...)</span><br><span class="line"> |      x.__repr__() &lt;==&gt; repr(x)</span><br><span class="line"> |</span><br><span class="line"> |  ----------------------------------------------------------------------</span><br><span class="line"> |  Data descriptors defined here:</span><br><span class="line"> |</span><br><span class="line"> |  __objclass__</span><br><span class="line"> |</span><br><span class="line"> |  __self__</span><br></pre></td></tr></table></figure>
+<p>但是我们从结果上可以推断，Python 在比较两个 dict 的时候，<strong><strong>eq</strong> 方法是会逐一比较其所包含的所有 key 所对应的值的</strong>。等哪天有空再看 Python 源码的时候，仔细研究这个 <code>__eq__</code> 魔方方法在 dict 中是如何实现的（给自己挖坑）。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/20190603-用Python去解释何为倒排索引/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hackerose"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/06/03/20190603-用Python去解释何为倒排索引/" class="post-title-link" itemprop="url">20190603-用Python去解释何为倒排索引</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-03 14:32:09 / Modified: 17:52:38" itemprop="dateCreated datePublished" datetime="2019-06-03T14:32:09+08:00">2019-06-03</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先，本文基于参考<a href="https://medium.com/@fro_g/writing-a-simple-inverted-index-in-python-3c8bcb52169a" target="_blank" rel="noopener">此博文</a>。</p>
+<p>因为最近想到既然自己在做 ELK 相关的内容，那么就要了解下 ES 的本质，加上自己最熟悉的语言就是 Python，所以就顺手上网搜了下前人总结的一些相关经验。本文也是对这些内容的二次消化，加上一些自己对于某些细节部分的解读。当然本文的理解可能也只停留在一个浅显的层面，没有深入的研究源码，但是这也是为之后的学习开一个头。</p>
+<h4 id="理解倒排"><a href="#理解倒排" class="headerlink" title="理解倒排"></a>理解倒排</h4><p>倒排索引，其实是定义的一种查询方式，直接通过中文理解很容易产生歧义。但是看到其英文 – <code>Inverted Index</code>，就能理解这个 <code>倒</code> 究竟是什么意思了。</p>
+<p>这里的<code>倒</code>，并不是我们的数据在储存顺序上的颠倒，更贴切的说，是一种查询逻辑上的颠倒。</p>
+<p>通俗来讲，我们原有如果是通过 <strong>*索引/ID**</strong> A 找到其对应的数据 B，那么就可以说这是一种 <strong>正排索引</strong> 逻辑；反之，如果是通过数据 B，找到其 <strong>*索引/ID**</strong> A (当然，还有其他一些信息)，那么就可以说是一种 <strong>倒排索引</strong> 逻辑。</p>
+<p>那么倒排索引，为什么能够被广泛的应用在全文检索的场景中，从上面的理解中，答案也就顺理成章的浮现出来了。</p>
+<p>如果想想一下用 <strong>正排索引</strong> 的逻辑，去做一个文本的搜索，我们要怎么查？因为我们不知道数据 B 中有没有要查的文本，只能每条记录逐一检查，然后返回符合条件记录的相关信息，效率想一想就很低。</p>
+<p>如果遵循 <strong>倒排索引</strong> 的逻辑，那么我们相当于知道了哪些 <strong>*索引/ID**</strong> 对应的记录包含了需要搜索的文本内容，从感觉上 (是的，暂时是从感觉上)，效率就比较高。当然这种高效，是在全文检索的这一个使用场景下，因为避开使用场景的讨论，都是不实际的。</p>
+<blockquote>
+<p>PS: 这里稍微回头想一下，为什么 ES 中做分词、不做分词、用不同的分词器分词，搜索出来的文档结果集不一样呢？那是因为前面所说的各种情况，所生成的倒排索引不同，那么所得到的 B to A 的结果就各不相同了。</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/30/20190530-celery使用踩坑记录/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -331,7 +642,7 @@
                 
               
 
-              <time title="Created: 2019-05-30 14:47:06 / Modified: 16:39:00" itemprop="dateCreated datePublished" datetime="2019-05-30T14:47:06+08:00">2019-05-30</time>
+              <time title="Created: 2019-05-30 14:47:06 / Modified: 17:50:38" itemprop="dateCreated datePublished" datetime="2019-05-30T14:47:06+08:00">2019-05-30</time>
             
 
             
@@ -1392,7 +1703,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1415,7 +1726,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

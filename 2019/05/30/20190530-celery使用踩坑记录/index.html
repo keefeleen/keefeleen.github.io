@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Hackerose">
 <meta property="og:description" content="线上调用接口，执行一些异步任务时，celery 的任务始终没有被触发，下面把排查过程以及之后对于此问题的一个理解进行一下总结  修复过程其实很简单，异步任务接口被触发时，会执行一个 deploy() 方法，让 celery 去执行一些 ansible 任务，但是看 celery 的日志始终没有触发任务。 而其它的异步任务，都是能够正常执行的，所以排除设置上或者应用层面的一些错误。 既然是有问题，">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-30T08:39:00.000Z">
+<meta property="og:updated_time" content="2019-05-30T09:50:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="20190530-celery使用踩坑记录">
 <meta name="twitter:description" content="线上调用接口，执行一些异步任务时，celery 的任务始终没有被触发，下面把排查过程以及之后对于此问题的一个理解进行一下总结  修复过程其实很简单，异步任务接口被触发时，会执行一个 deploy() 方法，让 celery 去执行一些 ansible 任务，但是看 celery 的日志始终没有触发任务。 而其它的异步任务，都是能够正常执行的，所以排除设置上或者应用层面的一些错误。 既然是有问题，">
@@ -333,7 +333,7 @@
                 
               
 
-              <time title="Created: 2019-05-30 14:47:06 / Modified: 16:39:00" itemprop="dateCreated datePublished" datetime="2019-05-30T14:47:06+08:00">2019-05-30</time>
+              <time title="Created: 2019-05-30 14:47:06 / Modified: 17:50:38" itemprop="dateCreated datePublished" datetime="2019-05-30T14:47:06+08:00">2019-05-30</time>
             
 
             
@@ -442,6 +442,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/06/03/20190603-用Python去解释何为倒排索引/" rel="prev" title="20190603-用Python去解释何为倒排索引">
+                20190603-用Python去解释何为倒排索引 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -509,7 +513,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -532,7 +536,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
