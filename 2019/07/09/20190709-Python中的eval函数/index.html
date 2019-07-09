@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="反转列表列表反转比较简单，列表原生方法 reverse() 既可以实现 123456In [1]: a = [1,2,3]In [2]: a.reverse()In [3]: aOut[3]: [3, 2, 1] 如果你想表现得有种来去如风的感觉，而且是想直接反转列表并赋值，也可以这样 123# 因为上面的 a 已经被 reverse 过了In [4]: a[::-1]Out[4]: [1, 2,">
+  <meta name="description" content="今天工作中，在处理一个配置文件扫描信息的任务时，同事给了一个使用 Python eval() 函数的较为便捷的方法，在此记录。 当时需要做的事情就是，扫描线上的一些配置文件，将文件中类似下面这种样式的信息提取出来，并获得其中的第一个 host 的 IP、端口信息。 1host =&amp;gt; [&amp;quot;10.0.0.1:8888&amp;quot;, &amp;quot;10.1.1.1:8888&amp;quot;]">
 <meta name="keywords" content="技术沉淀,编程语言,Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python的实用代码记录">
-<meta property="og:url" content="http://yoursite.com/2019/04/28/20190428-Python字典的实用操作记录/index.html">
+<meta property="og:title" content="Python中的eval函数">
+<meta property="og:url" content="http://yoursite.com/2019/07/09/20190709-Python中的eval函数/index.html">
 <meta property="og:site_name" content="Hackerose">
-<meta property="og:description" content="反转列表列表反转比较简单，列表原生方法 reverse() 既可以实现 123456In [1]: a = [1,2,3]In [2]: a.reverse()In [3]: aOut[3]: [3, 2, 1] 如果你想表现得有种来去如风的感觉，而且是想直接反转列表并赋值，也可以这样 123# 因为上面的 a 已经被 reverse 过了In [4]: a[::-1]Out[4]: [1, 2,">
+<meta property="og:description" content="今天工作中，在处理一个配置文件扫描信息的任务时，同事给了一个使用 Python eval() 函数的较为便捷的方法，在此记录。 当时需要做的事情就是，扫描线上的一些配置文件，将文件中类似下面这种样式的信息提取出来，并获得其中的第一个 host 的 IP、端口信息。 1host =&amp;gt; [&amp;quot;10.0.0.1:8888&amp;quot;, &amp;quot;10.1.1.1:8888&amp;quot;]">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-17T06:52:58.000Z">
+<meta property="og:updated_time" content="2019-07-09T08:16:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python的实用代码记录">
-<meta name="twitter:description" content="反转列表列表反转比较简单，列表原生方法 reverse() 既可以实现 123456In [1]: a = [1,2,3]In [2]: a.reverse()In [3]: aOut[3]: [3, 2, 1] 如果你想表现得有种来去如风的感觉，而且是想直接反转列表并赋值，也可以这样 123# 因为上面的 a 已经被 reverse 过了In [4]: a[::-1]Out[4]: [1, 2,">
+<meta name="twitter:title" content="Python中的eval函数">
+<meta name="twitter:description" content="今天工作中，在处理一个配置文件扫描信息的任务时，同事给了一个使用 Python eval() 函数的较为便捷的方法，在此记录。 当时需要做的事情就是，扫描线上的一些配置文件，将文件中类似下面这种样式的信息提取出来，并获得其中的第一个 host 的 IP、端口信息。 1host =&amp;gt; [&amp;quot;10.0.0.1:8888&amp;quot;, &amp;quot;10.1.1.1:8888&amp;quot;]">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/04/28/20190428-Python字典的实用操作记录/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/07/09/20190709-Python中的eval函数/"/>
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>Python的实用代码记录 | Hackerose</title>
+  <title>Python中的eval函数 | Hackerose</title>
   
 
 
@@ -290,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/20190428-Python字典的实用操作记录/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/09/20190709-Python中的eval函数/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Keefe Lin"/>
@@ -307,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Python的实用代码记录
+          <h1 class="post-title" itemprop="name headline">Python中的eval函数
 
               
             
@@ -333,24 +333,12 @@
                 
               
 
-              <time title="Created: 2019-04-28 15:01:51" itemprop="dateCreated datePublished" datetime="2019-04-28T15:01:51+08:00">2019-04-28</time>
+              <time title="Created: 2019-07-09 15:46:59 / Modified: 16:16:01" itemprop="dateCreated datePublished" datetime="2019-07-09T15:46:59+08:00">2019-07-09</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-05-17 14:52:58" itemprop="dateModified" datetime="2019-05-17T14:52:58+08:00">2019-05-17</time>
               
             
           </span>
@@ -384,25 +372,22 @@
       
 
       
-        <h3 id="反转列表"><a href="#反转列表" class="headerlink" title="反转列表"></a>反转列表</h3><p>列表反转比较简单，列表原生方法 <code>reverse()</code> 既可以实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [1]: a = [1,2,3]</span><br><span class="line"></span><br><span class="line">In [2]: a.reverse()</span><br><span class="line"></span><br><span class="line">In [3]: a</span><br><span class="line">Out[3]: [3, 2, 1]</span><br></pre></td></tr></table></figure>
-<p>如果你想表现得有种来去如风的感觉，而且是想直接反转列表并赋值，也可以这样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 因为上面的 a 已经被 reverse 过了</span><br><span class="line">In [4]: a[::-1]</span><br><span class="line">Out[4]: [1, 2, 3]</span><br></pre></td></tr></table></figure>
-<p><code>[::-1]</code>，以 <code>:</code> 分隔，三个部分分别表示开始的索引位置，结束的索引位置，以及步长，<code>[::-1]</code> 其实也是 <code>a[-1:-4:-1]</code> 的简写，当然，你可能事先不知道列表的长度，所以直接 <code>[::-1]</code> 是最简单的写法。</p>
-<h3 id="合并字典"><a href="#合并字典" class="headerlink" title="合并字典"></a>合并字典</h3><p>不多说，先上代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def merge(source, target):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    用于将两个字典进行合并</span><br><span class="line">    :param target: 希望被更新的字典</span><br><span class="line">    :param source: 包含新数据的字典</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    # 将两个字典进行合并，同个字段，由 target 的值覆盖 source 的值，如果不存在，则新增</span><br><span class="line">    # 简化版本，参考网上递归</span><br><span class="line">    for k, v in source.iteritems():</span><br><span class="line">        if isinstance(v, dict):</span><br><span class="line">            node = target.setdefault(k, &#123;&#125;)</span><br><span class="line">            merge(v, node)</span><br><span class="line">        else:</span><br><span class="line">            target[k] = v</span><br><span class="line">    return target</span><br></pre></td></tr></table></figure>
-<p>代码是很简单的迭代思路，值得注意的是，<code>setdefault()</code> 方法的使用。</p>
-<p>其实之前本人是对这个方法的使用时有所误解的，只是简单的认为这个方法是当字典中<code>指定的某个 key 不存在时，则增加这个 key 并赋值</code>，但是其实，这个方法是<strong>有返回值</strong>的，即：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">key 不存在，则设定这个 key 的值为 setdefault() 方法中第二个参数的值，并返回</span><br><span class="line">key 存在，则直接返回这个 key 的值，并且，不会用第二个参数的值去覆盖原有的值!!!</span><br></pre></td></tr></table></figure>
-<p>所以，setdefault() 成为了这个 merge() 方法的核心。另外一点就是，我们获取的值，即 node，是本身 target 字典中对应”节点”的引用，所以修改 node 的内容，会直接改变 target 这个传入的字典。</p>
-<h3 id="扁平化与反扁平化字典"><a href="#扁平化与反扁平化字典" class="headerlink" title="扁平化与反扁平化字典"></a>扁平化与反扁平化字典</h3><p>扁平化字典的需求，其实是在做开发的时候遇到的问题，就是希望把一个嵌套类型的字典，如 <code>{&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 1}}}</code>，转换成为如<code>{&#39;a.b.c&#39;: 1}</code>这种形式，其根本目的是希望能够让前端的程序，在列表中，更好的展现这个字典的内容。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">def function(data):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    用于将复杂的结构转换为友好的字段名格式</span><br><span class="line">    :param data:</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    stack = [((), data)]</span><br><span class="line">    result = []</span><br><span class="line">    while stack:</span><br><span class="line">        field_name, current = stack.pop()</span><br><span class="line">        for k, v in current.iteritems():</span><br><span class="line">            if isinstance(v, dict):</span><br><span class="line">                stack.append((field_name + (k,), v))</span><br><span class="line">            else:</span><br><span class="line">                result.append(&#123;</span><br><span class="line">                    &quot;.&quot;.join((field_name + (k,))): v</span><br><span class="line">                &#125;)</span><br><span class="line">    return sorted(result, key=lambda t: t[0])</span><br></pre></td></tr></table></figure>
-<p>代码整体的思路比较简单，首先设定一个限于函数内存的栈，用来缓存处理的信息，而推入栈中的内容，是一个元组，包含以下两个项：</p>
-<ol>
-<li>当前的字段列表，即能够表明，这个元组表示的是字典中的哪一个节点</li>
-<li>该节点的内容，即表示，在这一层中，数据的内容是什么</li>
-</ol>
-<p>那么捋一捋之后就比较清楚整体的逻辑了，即从整个字典开始扫，如果发现下一层元素的值仍然是个字典，那么，将这个元素的 key 以及 value 放到 stack 中，等待 while 循环进行处理。</p>
+        <p>今天工作中，在处理一个配置文件扫描信息的任务时，同事给了一个使用 Python <code>eval()</code> 函数的较为便捷的方法，在此记录。</p>
+<p>当时需要做的事情就是，扫描线上的一些配置文件，将文件中类似下面这种样式的信息提取出来，并获得其中的第一个 host 的 IP、端口信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">host =&gt; [&quot;10.0.0.1:8888&quot;, &quot;10.1.1.1:8888&quot;]</span><br></pre></td></tr></table></figure>
+<p>说着 Python 用了这么久了，但其实思维还是没从一个烧锅炉的转变过来（本科属于学校的’自动化’，其实主修强电方向，对口的就是去火电厂烧锅炉哈哈）。</p>
+<p>所以拿到这个问题，第一个反映就是一股脑的逐行扫描、正则匹配、切分匹配到的字段。那么问题来了，线上的配置多种多样，有的可不是那么标准。例如 <code>[&quot;10.0.0.1:8888&quot;, &quot;10.1.1.1:8888&quot;]</code> 这部分，很多都是用成了单引号，这就不得不增加了正则的复杂程度。</p>
+<p>由于旧的代码比较丑陋，而且不 <code>Pythonic</code>，所以就不贴上来丢人现眼了，直接切入正题，也就是同事给的使用 <code>eval()</code> 函数的思路。</p>
+<h4 id="使用-eval-函数"><a href="#使用-eval-函数" class="headerlink" title="使用 eval 函数"></a>使用 eval 函数</h4><p>很早其实接触编程，就看到过 <code>eval()</code> 函数的介绍。在 Python 中简单来说，它会 <strong><em>执行传入的代码</em></strong>。</p>
+<p>在我上面提到的任务中，<code>eval()</code> 函数可以极大的简化数据处理流程。</p>
+<p>比如在第一步预处理过程中，我们已经获取到了正则匹配到的 <code>[&quot;10.0.0.1:8888&quot;, &quot;10.1.1.1:8888&quot;]</code> 这个字符串，那我们可以直接使用 <code>eval(&#39;[&quot;10.0.0.1:8888&quot;, &quot;10.1.1.1:8888&quot;]&#39;)</code>，将这个字符串转换成 Python 的 list 对象，便于我们后续的处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [15]: type(eval(&apos;[&quot;10.0.0.1:8888&quot;, &quot;10.1.1.1:8888&quot;]&apos;))</span><br><span class="line">Out[15]: list</span><br></pre></td></tr></table></figure>
+<p>但是值得注意的是，这个函数同时也 <strong><em>非常的危险</em></strong>（很多书籍中都有提到），因为一旦使用不当，被人利用，会有不可预计的后果。例如下面这段输入，就会被用来移除系统中的文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [12]: eval(&quot;__import__(&apos;os&apos;).remove(&apos;file&apos;)&quot;)</span><br><span class="line">---------------------------------------------------------------------------</span><br><span class="line">OSError                                   Traceback (most recent call last)</span><br><span class="line">&lt;ipython-input-12-c9b8da757f01&gt; in &lt;module&gt;()</span><br><span class="line">----&gt; 1 eval(&quot;__import__(&apos;os&apos;).remove(&apos;file&apos;)&quot;)</span><br><span class="line"></span><br><span class="line">&lt;string&gt; in &lt;module&gt;()</span><br><span class="line"></span><br><span class="line">OSError: [Errno 2] No such file or directory: &apos;file&apos;</span><br></pre></td></tr></table></figure>
+<p>还好 <code>file</code> 文件是不存在的，不然就给跪了。更多的，<code>eval()</code> 是用于 Python 的交互式程序中，获取一些用户的指令输入，同时，一定要考虑到安全性方面的问题。</p>
+<h4 id="使用-json-模块"><a href="#使用-json-模块" class="headerlink" title="使用 json 模块"></a>使用 json 模块</h4><p>进一步的，由于清楚地知道 <code>eval()</code> 函数存在的危险性，不希望它出现在我们的代码中的话，怎么办呢。这时我想到了 <code>json.loads()</code> 函数，较前者来说，更为安全，他只是对我需要的字符串进行解析（当然，是要符合 json 标准的格式）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [19]: x = json.loads(&apos;[&quot;10.0.0.1:8888&quot;, &quot;10.1.1.1:8888&quot;]&apos;)</span><br><span class="line"></span><br><span class="line">In [20]: x</span><br><span class="line">Out[20]: [u&apos;10.0.0.1:8888&apos;, u&apos;10.1.1.1:8888&apos;]</span><br></pre></td></tr></table></figure>
+<p>总体来说，更加推荐使用 <code>json.loads()</code>，至少心理上感觉更加安全 :p</p>
 
       
     </div>
@@ -443,8 +428,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/11/20180711-查看Linux进程占用内存/" rel="next" title="查看Linux进程占用内存">
-                <i class="fa fa-chevron-left"></i> 查看Linux进程占用内存
+              <a href="/2019/06/20/20190620-Javascript中空对象的判断/" rel="next" title="Javascript中空对象的判断">
+                <i class="fa fa-chevron-left"></i> Javascript中空对象的判断
               </a>
             
           </div>
@@ -452,10 +437,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/28/20190428-用Python来描述一些基本算法--排序篇/" rel="prev" title="用Python来描述一些基本算法--排序篇">
-                用Python来描述一些基本算法--排序篇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -591,7 +572,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#反转列表"><span class="nav-number">1.</span> <span class="nav-text">反转列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并字典"><span class="nav-number">2.</span> <span class="nav-text">合并字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扁平化与反扁平化字典"><span class="nav-number">3.</span> <span class="nav-text">扁平化与反扁平化字典</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-eval-函数"><span class="nav-number">1.</span> <span class="nav-text">使用 eval 函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-json-模块"><span class="nav-number">2.</span> <span class="nav-text">使用 json 模块</span></a></li></ol></div>
             
 
           </div>
