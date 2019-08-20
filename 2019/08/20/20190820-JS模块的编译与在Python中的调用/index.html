@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前两天遇到这样一个需求。 我们需要将新版本的 Kibana 源码中，关于 Kibana Query Language（简称 kuery）转换为 Elasticsearch 的 Query DSL（https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html）的模块，直接用到我们 Python 程序的代码">
+<meta name="keywords" content="技术沉淀,编程语言,Python,Javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS模块的编译与在Python中的调用">
+<meta property="og:url" content="http://yoursite.com/2019/08/20/20190820-JS模块的编译与在Python中的调用/index.html">
+<meta property="og:site_name" content="Hackerose">
+<meta property="og:description" content="前两天遇到这样一个需求。 我们需要将新版本的 Kibana 源码中，关于 Kibana Query Language（简称 kuery）转换为 Elasticsearch 的 Query DSL（https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html）的模块，直接用到我们 Python 程序的代码">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-20T10:12:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS模块的编译与在Python中的调用">
+<meta name="twitter:description" content="前两天遇到这样一个需求。 我们需要将新版本的 Kibana 源码中，关于 Kibana Query Language（简称 kuery）转换为 Elasticsearch 的 Query DSL（https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html）的模块，直接用到我们 Python 程序的代码">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/08/20/20190820-JS模块的编译与在Python中的调用/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JS模块的编译与在Python中的调用 | Hackerose</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hackerose</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/20/20190820-JS模块的编译与在Python中的调用/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hackerose"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS模块的编译与在Python中的调用
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-20 16:43:54 / Modified: 18:12:52" itemprop="dateCreated datePublished" datetime="2019-08-20T16:43:54+08:00">2019-08-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前两天遇到这样一个需求。</p>
+<p>我们需要将新版本的 <a href="https://www.elastic.co/downloads/past-releases/kibana-6-7-2" target="_blank" rel="noopener">Kibana</a> 源码中，关于 <code>Kibana Query Language</code>（简称 <a href="https://www.elastic.co/guide/en/kibana/master/kuery-query.html" target="_blank" rel="noopener">kuery</a>）转换为 Elasticsearch 的 <code>Query DSL</code>（<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html）的模块，直接用到我们" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html）的模块，直接用到我们</a> Python 程序的代码块中，以支持一些用户使用 <code>kuery</code> 语法查询创建的定时查询任务。</p>
+<p>这里简单记录一下实现这个需求的过程，以及遇到的一些问题。</p>
+<h4 id="事前准备"><a href="#事前准备" class="headerlink" title="事前准备"></a>事前准备</h4><p>实际上抽象化上面描述的需求，就是需要将一个 JS 模块进行打包（最好成为一个独立的 <code>.js</code> 文件），然后通过 Python 调用执行这个 JS 文件所提供的方法，获取处理结果进行后续使用。所以总共要做的事情就分为了两大块</p>
+<ol>
+<li>JS 模块的打包</li>
+<li>Python 调用 JS 脚本</li>
+</ol>
+<h4 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h4><p>上述的第二个点不难，上网搜索就能找到名为 <a href="https://github.com/doloopwhile/PyExecJS" target="_blank" rel="noopener">PyExecJS</a> 库，虽然标明了已经 <code>End of Life</code> 了，但是就目前的使用情况来看，是够用的了。其使用方法，这里也不在累述（当然，我自己在使用过程中，关于编码方面的一个小坑，我也会在<code>其他文章</code>中简单记录）。</p>
+<p>那么回头看第一个点，<code>JS 模块的打包</code>，就是本文主要描述的内容。</p>
+<h4 id="JS-模块打包"><a href="#JS-模块打包" class="headerlink" title="JS 模块打包"></a>JS 模块打包</h4><p>其实本人的 JS 语言不算精通，目前也只是在公司、个人项目中使用到了 <code>jQuery</code>、<code>vueJS</code>、<code>ReactJS</code> 这几个库。提到打包用的工具，首先想到的是 <code>webpack</code>。</p>
+<p><code>webpack</code> 简单点说，就是一个帮助 JS 开发者在使用 JS 语言进行 <strong>网页</strong> 应用开发时，经常用到的一个打包工具，这里为什么强调 <strong>网页</strong> 应用，是因为根据我自己的理解，webpack 在打包过程中，会向代码添加一些包含浏览器所提供的 API 的内容，与我们当前的场景是不同、甚至说是 <strong>相违背</strong> 的（因为，我们需要在 node 环境下去运行代码，而非浏览器上）。</p>
+<p>经过一步步的踩坑与实践，我最终使用了 <a href="https://rollupjs.org/guide/en/" target="_blank" rel="noopener">rollup.js</a> 打包工具。同时，由于 Kibana 源码中使用了 CommonJS 以及 ES6 语法，所以我们需要一个语法转换插件，常用的就是 <code>babel</code>。</p>
+<p>另一方面，我们需要对 Kibana 的 <code>Kuery</code> 模块再封装一层方法，方便 Python 代码进行调用，所以我新增了一个 <code>index.js</code> 入口文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 将 Kibana Query Language 的查询转换为 ES DSL</span><br><span class="line">import * as ast from &apos;./kuery/ast&apos;</span><br><span class="line">import &#123; nodeTypes &#125; from &apos;./kuery/node_types/index&apos;</span><br><span class="line"></span><br><span class="line">export function toElasticsearchQuery (val) &#123;</span><br><span class="line">  var res = &#123;&#125;</span><br><span class="line">  res = ast.toElasticsearchQuery(ast.fromKueryExpression(val, &#123;&#125;))</span><br><span class="line">  return res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个入口文件，就暴露了名为 <code>toElasticsearchQuery</code> 的函数。有了工具，定义好了入口文件，那么我们可以编辑 <code>rollup.config.js</code> 配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import babel from &apos;rollup-plugin-babel&apos;;</span><br><span class="line">import commonjs from &apos;rollup-plugin-commonjs&apos;;</span><br><span class="line">import resolve from &apos;rollup-plugin-node-resolve&apos;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  input: &apos;src/index.js&apos;,</span><br><span class="line">  output: [</span><br><span class="line">    &#123;</span><br><span class="line">      file: &apos;dist/tool.js&apos;,</span><br><span class="line">      format: &apos;cjs&apos;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  plugins: [</span><br><span class="line">    resolve(),</span><br><span class="line">    commonjs(),</span><br><span class="line">    babel(&#123;</span><br><span class="line">      exclude: &apos;node_modules/**&apos;</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>而代码的目录结构则如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── dist</span><br><span class="line">│   └── tool.js    &lt;-- 打包后的 JS 脚本</span><br><span class="line">├── node_modules</span><br><span class="line">├── package-lock.json</span><br><span class="line">├── package.json</span><br><span class="line">├── rollup.config.js</span><br><span class="line">├── src</span><br><span class="line">│   ├── filters    &lt;-- 来自 kibana 源码</span><br><span class="line">│   ├── index.js   &lt;-- 新增的入口文件</span><br><span class="line">│   └── kuery      &lt;-- 来自 kibana 源码</span><br></pre></td></tr></table></figure>
+<p>完成上述工作后，使用 <code>rollup -c</code> 进行编译打包，出现了如下报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[!] Error: &apos;get&apos; is not exported by node_modules/lodash/object.js</span><br><span class="line">https://rollupjs.org/guide/en/#error-name-is-not-exported-by-module</span><br><span class="line">src/kuery/functions/exists.js (20:9)</span><br><span class="line">18:  */</span><br><span class="line">19:</span><br><span class="line">20: import &#123; get &#125; from &apos;lodash/object&apos;;</span><br><span class="line">             ^</span><br><span class="line">21: import * as literal from &apos;../node_types/literal&apos;;</span><br><span class="line">Error: &apos;get&apos; is not exported by node_modules/lodash/object.js</span><br></pre></td></tr></table></figure>
+<p>通过参考此 <a href="https://github.com/rollup/rollup-plugin-commonjs/issues/266" target="_blank" rel="noopener">issue</a>，得知是 CommonJS 在引入模块时的一些问题。修改 <code>rollup.config.js</code> 配置如下（如果可以的话，我会再深入研究下这个问题，可以参考 <a href="https://adrianmejia.com/getting-started-with-node-js-modules-require-exports-imports-npm-and-beyond/" target="_blank" rel="noopener">此文章</a>）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import babel from &apos;rollup-plugin-babel&apos;;</span><br><span class="line">import commonjs from &apos;rollup-plugin-commonjs&apos;;</span><br><span class="line">import resolve from &apos;rollup-plugin-node-resolve&apos;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  input: &apos;src/index.js&apos;,</span><br><span class="line">  output: [</span><br><span class="line">    &#123;</span><br><span class="line">      file: &apos;dist/tool.js&apos;,</span><br><span class="line">      format: &apos;cjs&apos;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  plugins: [</span><br><span class="line">    resolve(),</span><br><span class="line">    commonjs(&#123;</span><br><span class="line">      namedExports: &#123;</span><br><span class="line">        &apos;node_modules/lodash/object.js&apos;: [ &apos;get&apos; ],     &lt;-- 相当于告诉 rollup.js，get 在 lodash 的 object.js 被 export 出来</span><br><span class="line">        &apos;src/kuery/ast/kuery.js&apos;: [ &apos;parse&apos; ],          &lt;-- kuery 的模块也遇到类似问题</span><br><span class="line">        &apos;src/kuery/ast/legacy_kuery.js&apos;: [ &apos;parse&apos; ]    &lt;-- kuery 的模块也遇到类似问题</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;),</span><br><span class="line">    commonjs(),</span><br><span class="line">    babel(&#123;</span><br><span class="line">      exclude: &apos;node_modules/**&apos;</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>编译之后我们得到 <code>tool.js</code>，那么测试下 <code>tool.js</code> 是否可以正常被调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; var ttt = require(&quot;./dist/tool&quot;)</span><br><span class="line">undefined</span><br><span class="line"></span><br><span class="line">&gt; ttt</span><br><span class="line">&#123; toElasticsearchQuery: [Function: toElasticsearchQuery$d] &#125;</span><br><span class="line"></span><br><span class="line">&gt; JSON.stringify(ttt.toElasticsearchQuery(&apos;message: a or raw: b&apos;))</span><br><span class="line">&apos;&#123;&quot;bool&quot;:&#123;&quot;should&quot;:[&#123;&quot;bool&quot;:&#123;&quot;should&quot;:[&#123;&quot;match&quot;:&#123;&quot;message&quot;:&quot;a&quot;&#125;&#125;],&quot;minimum_should_match&quot;:1&#125;&#125;,&#123;&quot;bool&quot;:&#123;&quot;should&quot;:[&#123;&quot;match&quot;:&#123;&quot;raw&quot;:&quot;b&quot;&#125;&#125;],&quot;minimum_should_match&quot;:1&#125;&#125;],&quot;minimum_should_match&quot;:1&#125;&#125;&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="Python-模块的引入"><a href="#Python-模块的引入" class="headerlink" title="Python 模块的引入"></a>Python 模块的引入</h4><p>这里通过 Python 代码引入，就比较简单了，封装的代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">import execjs</span><br><span class="line">import json</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class KueryConvertor(object):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    用于进行 kuery 语法到 DSL 语法的转换，仅单向</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self):</span><br><span class="line">        # 引入 js 模块，给予 ctx 以便之后执行</span><br><span class="line">        self.js_func_name = &apos;toElasticsearchQuery&apos;</span><br><span class="line">        self.ctx = execjs.compile(&quot;&quot;&quot;</span><br><span class="line">              tool = require(&apos;&#123;0&#125;/dist/tool&apos;)</span><br><span class="line">              function toElasticsearchQuery (_kuery) &#123;&#123;</span><br><span class="line">                return tool.&#123;1&#125;(_kuery)</span><br><span class="line">              &#125;&#125;</span><br><span class="line">            &quot;&quot;&quot;.format(os.path.dirname(os.path.realpath(__file__)))</span><br><span class="line"></span><br><span class="line">    def to_elasticsearch_query(self, _kuery):</span><br><span class="line">        return self.ctx.call(&apos;toElasticsearchQuery, _kuery)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术沉淀/" rel="tag"># 技术沉淀</a>
+          
+            <a href="/tags/编程语言/" rel="tag"># 编程语言</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/09/20190709-Python中的eval函数/" rel="next" title="Python中的eval函数">
+                <i class="fa fa-chevron-left"></i> Python中的eval函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Keefe Lin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#事前准备"><span class="nav-number">1.</span> <span class="nav-text">事前准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路"><span class="nav-number">2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JS-模块打包"><span class="nav-number">3.</span> <span class="nav-text">JS 模块打包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python-模块的引入"><span class="nav-number">4.</span> <span class="nav-text">Python 模块的引入</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Keefe Lin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
