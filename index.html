@@ -331,7 +331,7 @@
                 
               
 
-              <time title="Created: 2019-08-20 16:43:54 / Modified: 18:12:52" itemprop="dateCreated datePublished" datetime="2019-08-20T16:43:54+08:00">2019-08-20</time>
+              <time title="Created: 2019-08-20 16:43:54 / Modified: 18:16:56" itemprop="dateCreated datePublished" datetime="2019-08-20T16:43:54+08:00">2019-08-20</time>
             
 
             
@@ -373,7 +373,7 @@
         
           
             <p>前两天遇到这样一个需求。</p>
-<p>我们需要将新版本的 <a href="https://www.elastic.co/downloads/past-releases/kibana-6-7-2" target="_blank" rel="noopener">Kibana</a> 源码中，关于 <code>Kibana Query Language</code>（简称 <a href="https://www.elastic.co/guide/en/kibana/master/kuery-query.html" target="_blank" rel="noopener">kuery</a>）转换为 Elasticsearch 的 <code>Query DSL</code>（<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html）的模块，直接用到我们" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html）的模块，直接用到我们</a> Python 程序的代码块中，以支持一些用户使用 <code>kuery</code> 语法查询创建的定时查询任务。</p>
+<p>我们需要将新版本的 <a href="https://www.elastic.co/downloads/past-releases/kibana-6-7-2" target="_blank" rel="noopener">Kibana</a> 源码中，关于 <code>Kibana Query Language</code>（简称 <a href="https://www.elastic.co/guide/en/kibana/master/kuery-query.html" target="_blank" rel="noopener">kuery</a>）转换为 Elasticsearch 的 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html" target="_blank" rel="noopener">Query DSL</a> 的模块，直接用到我们 Python 程序的代码块中，以支持一些用户使用 <code>kuery</code> 语法查询创建的定时查询任务。</p>
 <p>这里简单记录一下实现这个需求的过程，以及遇到的一些问题。</p>
 <h4 id="事前准备"><a href="#事前准备" class="headerlink" title="事前准备"></a>事前准备</h4><p>实际上抽象化上面描述的需求，就是需要将一个 JS 模块进行打包（最好成为一个独立的 <code>.js</code> 文件），然后通过 Python 调用执行这个 JS 文件所提供的方法，获取处理结果进行后续使用。所以总共要做的事情就分为了两大块</p>
 <ol>
