@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="线上调用接口，执行一些异步任务时，celery 的任务始终没有被触发，下面把排查过程以及之后对于此问题的一个理解进行一下总结  修复过程其实很简单，异步任务接口被触发时，会执行一个 deploy() 方法，让 celery 去执行一些 ansible 任务，但是看 celery 的日志始终没有触发任务。 而其它的异步任务，都是能够正常执行的，所以排除设置上或者应用层面的一些错误。 既然是有问题，">
-<meta name="keywords" content="技术沉淀,编程语言,Python">
+  <meta name="description" content="网上相关的文章有很多，但是比较松散，这里会作为一个整体上的总结，希望能加深自己的记忆（以 Debian 系统为例）。  信息查询这一类型指令包含查询当前 Linux 系统的一些基本信息，例如内存、CPU、磁盘等等，有助于对服务器的原始状态有一个初步了解。一些基本指令是基于 dmidecode 工具的，如果未找到指令，使用 sudo apt-get install dmidecode 安装。 服务器">
+<meta name="keywords" content="技术沉淀,Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="celery使用踩坑记录">
-<meta property="og:url" content="http://yoursite.com/2019/05/30/20190530-celery使用踩坑记录/index.html">
+<meta property="og:title" content="Linux常用操作指令总结">
+<meta property="og:url" content="http://yoursite.com/2019/10/15/20191015-Linux常用操作指令总结/index.html">
 <meta property="og:site_name" content="Hackerose">
-<meta property="og:description" content="线上调用接口，执行一些异步任务时，celery 的任务始终没有被触发，下面把排查过程以及之后对于此问题的一个理解进行一下总结  修复过程其实很简单，异步任务接口被触发时，会执行一个 deploy() 方法，让 celery 去执行一些 ansible 任务，但是看 celery 的日志始终没有触发任务。 而其它的异步任务，都是能够正常执行的，所以排除设置上或者应用层面的一些错误。 既然是有问题，">
+<meta property="og:description" content="网上相关的文章有很多，但是比较松散，这里会作为一个整体上的总结，希望能加深自己的记忆（以 Debian 系统为例）。  信息查询这一类型指令包含查询当前 Linux 系统的一些基本信息，例如内存、CPU、磁盘等等，有助于对服务器的原始状态有一个初步了解。一些基本指令是基于 dmidecode 工具的，如果未找到指令，使用 sudo apt-get install dmidecode 安装。 服务器">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-27T01:39:15.000Z">
+<meta property="og:updated_time" content="2019-10-15T06:11:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="celery使用踩坑记录">
-<meta name="twitter:description" content="线上调用接口，执行一些异步任务时，celery 的任务始终没有被触发，下面把排查过程以及之后对于此问题的一个理解进行一下总结  修复过程其实很简单，异步任务接口被触发时，会执行一个 deploy() 方法，让 celery 去执行一些 ansible 任务，但是看 celery 的日志始终没有触发任务。 而其它的异步任务，都是能够正常执行的，所以排除设置上或者应用层面的一些错误。 既然是有问题，">
+<meta name="twitter:title" content="Linux常用操作指令总结">
+<meta name="twitter:description" content="网上相关的文章有很多，但是比较松散，这里会作为一个整体上的总结，希望能加深自己的记忆（以 Debian 系统为例）。  信息查询这一类型指令包含查询当前 Linux 系统的一些基本信息，例如内存、CPU、磁盘等等，有助于对服务器的原始状态有一个初步了解。一些基本指令是基于 dmidecode 工具的，如果未找到指令，使用 sudo apt-get install dmidecode 安装。 服务器">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/05/30/20190530-celery使用踩坑记录/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/10/15/20191015-Linux常用操作指令总结/"/>
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>celery使用踩坑记录 | Hackerose</title>
+  <title>Linux常用操作指令总结 | Hackerose</title>
   
 
 
@@ -290,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/30/20190530-celery使用踩坑记录/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/15/20191015-Linux常用操作指令总结/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Keefe Lin"/>
@@ -307,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">celery使用踩坑记录
+          <h1 class="post-title" itemprop="name headline">Linux常用操作指令总结
 
               
             
@@ -333,24 +333,12 @@
                 
               
 
-              <time title="Created: 2019-05-30 14:47:06" itemprop="dateCreated datePublished" datetime="2019-05-30T14:47:06+08:00">2019-05-30</time>
+              <time title="Created: 2019-10-15 09:54:11 / Modified: 14:11:45" itemprop="dateCreated datePublished" datetime="2019-10-15T09:54:11+08:00">2019-10-15</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-06-27 09:39:15" itemprop="dateModified" datetime="2019-06-27T09:39:15+08:00">2019-06-27</time>
               
             
           </span>
@@ -384,26 +372,60 @@
       
 
       
-        <blockquote>
-<p>线上调用接口，执行一些异步任务时，celery 的任务始终没有被触发，下面把排查过程以及之后对于此问题的一个理解进行一下总结</p>
+        <p>网上相关的文章有很多，但是比较松散，这里会作为一个整体上的总结，希望能加深自己的记忆（以 Debian 系统为例）。</p>
+<hr>
+<h2 id="信息查询"><a href="#信息查询" class="headerlink" title="信息查询"></a>信息查询</h2><p>这一类型指令包含查询当前 Linux 系统的一些基本信息，例如内存、CPU、磁盘等等，有助于对服务器的原始状态有一个初步了解。一些基本指令是基于 <code>dmidecode</code> 工具的，如果未找到指令，使用 <code>sudo apt-get install dmidecode</code> 安装。</p>
+<h3 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h3><ol>
+<li><p>查看服务器品牌型号信息</p>
+<p><code>dmidecode | grep -A2 &quot;System Information&quot; | grep &quot;Product Name&quot;</code></p>
+</li>
+</ol>
+<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><ol>
+<li><p>查看每个插槽的内存大小</p>
+<p><code>dmidecode | grep -A5 &quot;Memory Device&quot; | grep Size</code></p>
+</li>
+<li><p>查看每个插槽的内存频率</p>
+<p><code>dmidecode | grep -A16 &quot;Memory Device&quot; | grep &quot;Speed&quot;</code></p>
+</li>
+</ol>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><ol>
+<li><p>查看 CPU 个数、核心数</p>
+<ul>
+<li>物理 CPU 个数：<code>cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</code></li>
+<li>逻辑 CPU 个数：<code>cat /proc/cpuinfo| grep &quot;processor&quot;| wc -l</code></li>
+<li>查看单个 CPU 核心数：<code>cat /proc/cpuinfo| grep &quot;cpu cores&quot;| uniq</code></li>
+</ul>
+<p>另外要关注的是如下两个关于 CPU 的计算公式</p>
+<ul>
+<li>总核心数 = 物理 CPU 个数 * 单个 CPU 核心数</li>
+<li>逻辑 CPU 个数 = 物理 CPU 个数 <em> 单个 CPU 核心数 </em> 超线程数</li>
+</ul>
+</li>
+<li><p>查看 CPU 型号</p>
+<p><code>cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</code></p>
+<blockquote>
+<p>PS: 可以留意下这里 <code>cut</code> 分割字符串的用法，比 <code>awk</code> 简单直接一些。</p>
 </blockquote>
-<h4 id="修复过程"><a href="#修复过程" class="headerlink" title="修复过程"></a>修复过程</h4><p>其实很简单，异步任务接口被触发时，会执行一个 <code>deploy()</code> 方法，让 celery 去执行一些 ansible 任务，但是看 celery 的日志始终没有触发任务。</p>
-<p>而其它的异步任务，都是能够正常执行的，所以排除设置上或者应用层面的一些错误。</p>
-<p>既然是有问题，那就与执行正常的代码对比一下，发现有问题的方法内触发 celery task 时，调用的 <code>apply_async()</code>，与其它正常执行的调用少了 <code>serializer=&#39;json&#39;</code> 参数。</p>
-<p>加上这个参数后，就能正常执行了。</p>
-<h4 id="原因探究"><a href="#原因探究" class="headerlink" title="原因探究"></a>原因探究</h4><p>虽然解决了问题，但是还是要看下为什么这里要加上 <code>serializer=&#39;json&#39;</code> 这个参数。</p>
-<p>首先，目前我们使用的 celery 版本是 <code>3.1.24</code>，查询<a href="http://docs.celeryproject.org/en/3.1/userguide/calling.html#calling-serializers" target="_blank" rel="noopener">相关文档</a>，很容易就能找到如下描述</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Data transferred between clients and workers needs to be serialized, so every message in Celery has a content_type header that describes the serialization method used to encode it.</span><br><span class="line"></span><br><span class="line">The default serializer is pickle, but you can change this using the CELERY_TASK_SERIALIZER setting, or for each individual task, or even per message.</span><br><span class="line"></span><br><span class="line">There’s built-in support for pickle, JSON, YAML and msgpack, and you can also add your own custom serializers by registering them into the Kombu serializer registry (see ref:kombu:guide-serialization).</span><br></pre></td></tr></table></figure>
-<p>找遍代码，没有全局的 <strong>CELERY_TASK_SERIALIZER</strong> 设定，所以每一个 task 就需要去设定 <code>serializer</code> 了，不然会默认使用 <code>pickle</code>.</p>
-<p>但是，为什么默认 pickle 不行呢？文档中指出，<code>pickle</code> 是一个不安全的持久化方案，且 celery 可以通过 <strong>CELERY_ACCEPT_CONTENT</strong> 这个变量去作为白名单，只允许白名单中的持久化方案被用作 worker 和 client 之间的通信。</p>
-<p>所以回头看配置文件，其中包含了这个白名单的配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELERY_ACCEPT_CONTENT = [&apos;json&apos;, ]</span><br></pre></td></tr></table></figure>
-<p>所以一开始是出于安全考虑，仅可以支持 json 持久化方式去传递数据，在方法中未指定 <code>serializer</code> 的情况下，celery 库就自动终止了 client 发起的任务，导致后续的任务没有被执行。</p>
-<h4 id="总结回顾"><a href="#总结回顾" class="headerlink" title="总结回顾"></a>总结回顾</h4><p>为什么使用 <code>pickle</code> 的持久化方式会存在安全隐患？这个又是后续的一个问题。</p>
-<p>根据官方文档，提供了一个分析 <code>pickle</code> 存在的隐患的<a href="https://blog.nelhage.com/2011/03/exploiting-pickle/" target="_blank" rel="noopener">博客</a>。</p>
-<p>值得注意的是这一段</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pickle allows arbitrary objects to declare how they should be pickled by defining a __reduce__ method, which should return either a string or a tuple describing how to reconstruct this object on unpacking.</span><br></pre></td></tr></table></figure>
-<p>简单来说，利用 pickle 库的特性，在客户端持久化数据前，定义一个改写过 <code>__reduce__</code> 方法的类，在服务端接收到这个数据时，会调用这个方法，很可能被被恶意代码启动一个危险的进程，导致服务器被黑。</p>
+</li>
+<li><p>查看 CPU 频率</p>
+<p><code>cat /proc/cpuinfo | grep &quot;cpu MHz&quot;</code></p>
+</li>
+</ol>
+<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><p>  查看磁盘的场景应该是最多的，例如我们需要确认磁盘状态、磁盘类型，从而进行一些维护处理，都需要用到磁盘查看的相关指令。</p>
+<ol>
+<li><p>确认磁盘是否为 SSD</p>
+<ul>
+<li>利用 <code>block layer</code> 特性判断：我们以 <code>sda</code> 为例，通过 <code>cat /sys/block/sda/queue/rotational</code> 指令查看返回，如果为 <code>0</code> 则为 SSD 盘，返回 <code>1</code> 则为普通 HDD。然而，这个方式也有不准确的可能性，具体可以参考 <a href="https://stackoverflow.com/questions/20372544/what-is-the-significance-of-queue-rotational-in-linux" target="_blank" rel="noopener">此链接</a></li>
+<li>利用 <code>lsblk</code> 指令判断：其实跟前面的方法类似，使用 <code>lsblk -d -o name,rota</code> 指令用于一次性显示各个磁盘是否为 <code>rotational</code>。</li>
+<li>使用 <code>smartctl</code> 指令判断：此指令包含在 <code>smartmontools</code> 包中，使用 <code>smartctl -i /dev/sda</code> 查看磁盘信息（做了 raid 的盘目前也不是很清楚怎么进行查询判断）。另外关于 <strong>SMART</strong> 工具，可以参考 <a href="https://xiaoyeshiyu.github.io/storage/2018/04/11/%E4%BD%BF%E7%94%A8smartctl%E6%A3%80%E6%9F%A5%E7%A3%81%E7%9B%98/" target="_blank" rel="noopener">此文章</a></li>
+</ul>
+<p>所以，上述方法最准确的使用场景应该是在没有做 Raid 的情况下。如果在做了 Raid 的情况下，我们可以使用以下方法。</p>
+<ul>
+<li>利用 <code>hwtool</code> 指令判断：使用 <code>hwtool -m raid -d</code> 指令的输出，即可查看磁盘信息，以及最重要的 <strong>磁盘状态</strong> 也可以使用此命令查询到</li>
+<li>利用 <code>MegaCli</code> 指令判断：使用 <code>/usr/local/hwtool/tool/MegaCli PDList aAll</code> 指令的输出，即可查看物理盘的具体信息，同样，<strong>磁盘状态</strong> 也可以使用此命令查询到</li>
+</ul>
+</li>
+</ol>
 
       
     </div>
@@ -429,9 +451,7 @@
           
             <a href="/tags/技术沉淀/" rel="tag"># 技术沉淀</a>
           
-            <a href="/tags/编程语言/" rel="tag"># 编程语言</a>
-          
-            <a href="/tags/Python/" rel="tag"># Python</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
         </div>
       
@@ -444,8 +464,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/17/20190517-vim中的正则替换/" rel="next" title="vim中的正则替换">
-                <i class="fa fa-chevron-left"></i> vim中的正则替换
+              <a href="/2019/10/15/20191015-JS中的export方式总结/" rel="next" title="JS中的export方式总结">
+                <i class="fa fa-chevron-left"></i> JS中的export方式总结
               </a>
             
           </div>
@@ -453,10 +473,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/03/20190603-用Python去解释何为倒排索引/" rel="prev" title="用Python去解释何为倒排索引">
-                用Python去解释何为倒排索引 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -592,7 +608,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#修复过程"><span class="nav-number">1.</span> <span class="nav-text">修复过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原因探究"><span class="nav-number">2.</span> <span class="nav-text">原因探究</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结回顾"><span class="nav-number">3.</span> <span class="nav-text">总结回顾</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息查询"><span class="nav-number">1.</span> <span class="nav-text">信息查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器"><span class="nav-number">1.1.</span> <span class="nav-text">服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存"><span class="nav-number">1.2.</span> <span class="nav-text">内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU"><span class="nav-number">1.3.</span> <span class="nav-text">CPU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#磁盘"><span class="nav-number">1.4.</span> <span class="nav-text">磁盘</span></a></li></ol></li></ol></div>
             
 
           </div>

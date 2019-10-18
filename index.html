@@ -286,6 +286,345 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/15/20191015-Linux常用操作指令总结/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hackerose"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/15/20191015-Linux常用操作指令总结/" class="post-title-link" itemprop="url">Linux常用操作指令总结</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-10-15 09:54:11 / Modified: 14:11:45" itemprop="dateCreated datePublished" datetime="2019-10-15T09:54:11+08:00">2019-10-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>网上相关的文章有很多，但是比较松散，这里会作为一个整体上的总结，希望能加深自己的记忆（以 Debian 系统为例）。</p>
+<hr>
+<h2 id="信息查询"><a href="#信息查询" class="headerlink" title="信息查询"></a>信息查询</h2><p>这一类型指令包含查询当前 Linux 系统的一些基本信息，例如内存、CPU、磁盘等等，有助于对服务器的原始状态有一个初步了解。一些基本指令是基于 <code>dmidecode</code> 工具的，如果未找到指令，使用 <code>sudo apt-get install dmidecode</code> 安装。</p>
+<h3 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h3><ol>
+<li><p>查看服务器品牌型号信息</p>
+<p><code>dmidecode | grep -A2 &quot;System Information&quot; | grep &quot;Product Name&quot;</code></p>
+</li>
+</ol>
+<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><ol>
+<li><p>查看每个插槽的内存大小</p>
+<p><code>dmidecode | grep -A5 &quot;Memory Device&quot; | grep Size</code></p>
+</li>
+<li><p>查看每个插槽的内存频率</p>
+<p><code>dmidecode | grep -A16 &quot;Memory Device&quot; | grep &quot;Speed&quot;</code></p>
+</li>
+</ol>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><ol>
+<li><p>查看 CPU 个数、核心数</p>
+<ul>
+<li>物理 CPU 个数：<code>cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</code></li>
+<li>逻辑 CPU 个数：<code>cat /proc/cpuinfo| grep &quot;processor&quot;| wc -l</code></li>
+<li>查看单个 CPU 核心数：<code>cat /proc/cpuinfo| grep &quot;cpu cores&quot;| uniq</code></li>
+</ul>
+<p>另外要关注的是如下两个关于 CPU 的计算公式</p>
+<ul>
+<li>总核心数 = 物理 CPU 个数 * 单个 CPU 核心数</li>
+<li>逻辑 CPU 个数 = 物理 CPU 个数 <em> 单个 CPU 核心数 </em> 超线程数</li>
+</ul>
+</li>
+<li><p>查看 CPU 型号</p>
+<p><code>cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</code></p>
+<blockquote>
+<p>PS: 可以留意下这里 <code>cut</code> 分割字符串的用法，比 <code>awk</code> 简单直接一些。</p>
+</blockquote>
+</li>
+<li><p>查看 CPU 频率</p>
+<p><code>cat /proc/cpuinfo | grep &quot;cpu MHz&quot;</code></p>
+</li>
+</ol>
+<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><p>  查看磁盘的场景应该是最多的，例如我们需要确认磁盘状态、磁盘类型，从而进行一些维护处理，都需要用到磁盘查看的相关指令。</p>
+<ol>
+<li><p>确认磁盘是否为 SSD</p>
+<ul>
+<li>利用 <code>block layer</code> 特性判断：我们以 <code>sda</code> 为例，通过 <code>cat /sys/block/sda/queue/rotational</code> 指令查看返回，如果为 <code>0</code> 则为 SSD 盘，返回 <code>1</code> 则为普通 HDD。然而，这个方式也有不准确的可能性，具体可以参考 <a href="https://stackoverflow.com/questions/20372544/what-is-the-significance-of-queue-rotational-in-linux" target="_blank" rel="noopener">此链接</a></li>
+<li>利用 <code>lsblk</code> 指令判断：其实跟前面的方法类似，使用 <code>lsblk -d -o name,rota</code> 指令用于一次性显示各个磁盘是否为 <code>rotational</code>。</li>
+<li>使用 <code>smartctl</code> 指令判断：此指令包含在 <code>smartmontools</code> 包中，使用 <code>smartctl -i /dev/sda</code> 查看磁盘信息（做了 raid 的盘目前也不是很清楚怎么进行查询判断）。另外关于 <strong>SMART</strong> 工具，可以参考 <a href="https://xiaoyeshiyu.github.io/storage/2018/04/11/%E4%BD%BF%E7%94%A8smartctl%E6%A3%80%E6%9F%A5%E7%A3%81%E7%9B%98/" target="_blank" rel="noopener">此文章</a></li>
+</ul>
+<p>所以，上述方法最准确的使用场景应该是在没有做 Raid 的情况下。如果在做了 Raid 的情况下，我们可以使用以下方法。</p>
+<ul>
+<li>利用 <code>hwtool</code> 指令判断：使用 <code>hwtool -m raid -d</code> 指令的输出，即可查看磁盘信息，以及最重要的 <strong>磁盘状态</strong> 也可以使用此命令查询到</li>
+<li>利用 <code>MegaCli</code> 指令判断：使用 <code>/usr/local/hwtool/tool/MegaCli PDList aAll</code> 指令的输出，即可查看物理盘的具体信息，同样，<strong>磁盘状态</strong> 也可以使用此命令查询到</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/15/20191015-JS中的export方式总结/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Keefe Lin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hackerose"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/15/20191015-JS中的export方式总结/" class="post-title-link" itemprop="url">JS中的export方式总结</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-10-15 09:51:01 / Modified: 10:47:36" itemprop="dateCreated datePublished" datetime="2019-10-15T09:51:01+08:00">2019-10-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="/images/To_Be_Continued.jpg" alt="To Be Continued"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/20/20190820-JS模块的编译与在Python中的调用/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1625,408 +1964,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/11/20180711-查看Linux进程占用内存/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Keefe Lin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hackerose"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/07/11/20180711-查看Linux进程占用内存/" class="post-title-link" itemprop="url">查看Linux进程占用内存</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-07-11 11:04:27" itemprop="dateCreated datePublished" datetime="2018-07-11T11:04:27+08:00">2018-07-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-05-17 14:53:18" itemprop="dateModified" datetime="2019-05-17T14:53:18+08:00">2019-05-17</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>用了这么久 Linux，当有人问起一些基础的指令问题的时候，还是会愣一下。回头想想，现在老了，记性不好了，对于不常用的东西，还是找个地方把他存盘好一点。</p>
-</blockquote>
-<h3 id="方便快捷-PS"><a href="#方便快捷-PS" class="headerlink" title="方便快捷 - PS"></a>方便快捷 - PS</h3><p>查看内存使用，我们可能第一时间想到的是用 top，但是像我这种半吊子来说，top 在我脑海中始终是那个充满着一堆动态变化数据的表格。那些在界面中的各种复杂骚操作早已忘得一干二净。回过头来，其实 Linux 中最常用的指令 <code>ps</code>，就能够满足需求。</p>
-<p>话不多说，先上指令:</p>
-<p>  <code>ps -eo rss,pmem,pcpu,vsize,args</code></p>
-<p>上面的指令就是对进程信息进行格式化输出，<code>-o</code>参数，加上后面的字段，指定了我们希望输出的信息。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rss: resident set size 的缩写，表示进程占用的内存大小，以 KB 为单位</span><br><span class="line">pmem: percentage of memory，表示内存占用百分比</span><br><span class="line">pcpu: percentage of cpu usage，表示 cpu 占用百分比</span><br><span class="line">vsize: 表示进程占用虚拟内存大小，以 KB 为单位</span><br><span class="line">args: 进程名，或者指令的名称</span><br></pre></td></tr></table></figure>
-<p>上面这几个参数是我们最经常用到的，那么如果我们要使用其中某个数值字段进行排序，我们会用到<code>sort</code>指令</p>
-<p>  <code>ps -eo rss,pmem,pcpu,vsize,args | sort -k 1 -r -n | less</code></p>
-<p>上面<code>-k</code>参数表示的是我需要按照管道传入数据的第几列数据进行排序，另外两个参数不累述。</p>
-<h3 id="清晰详细-TOP"><a href="#清晰详细-TOP" class="headerlink" title="清晰详细 - TOP"></a>清晰详细 - TOP</h3><p>top 的话本人用的比较少，下面简单的总结记录一下。</p>
-<p>使用 top 查看进程的内存占用等信息，首先我们可以用 ps 指令找出进程的 pid</p>
-<p>  <code>ps aux | awk &#39;/&lt;process_name&gt;/&#39;</code></p>
-<blockquote>
-<p>这里值得注意的是，其实 <code>ps aux</code> 输出的第 3、4 列，就已经分别表示了进程的 CPU 以及内存的占用率(百分比)，第 5、6 列，则是 VSZ、RSS，即虚拟内存占用大小（virtual memory size，和实际内存占用大小（resident set size）</p>
-</blockquote>
-<p>然后使用如下指令</p>
-<p>  <code>top -p &lt;pid&gt;</code></p>
-<blockquote>
-<p>PS: 进入到 top 的交互界面时，按 <code>c</code> 键的话，可以看到完整的 command，此时如果再按 <code>shift + w</code> 的话，就能记住此配置，以便下次打开时直接显示完整的 command。</p>
-</blockquote>
-<h3 id="更进一步"><a href="#更进一步" class="headerlink" title="更进一步"></a>更进一步</h3><p>其实很多情况下，无论在服务器排查故障或者调查应用的性能问题时，不仅仅需要到进程的层面，而需要更深入的查看线程的资源使用情况。</p>
-<p>那么我们如何查看线程的资源占用情况呢。</p>
-<p>对于 top，我们可以在参数后加上 <code>-H</code>，即</p>
-<p>  <code>top -Hp &lt;pid&gt;</code></p>
-<p>同样，对于 ps 指令，同样可以加上 <code>H</code> 参数</p>
-<p>  <code>ps H -eo rss,pmem,pcpu,vsize,args  | sort -k 1 -r -n</code></p>
-<p>如果希望查看一个进程树的情况，我们在知道进程名称的情况下，可以使用如下指令查看</p>
-<p>  <code>ps -ef f | grep &lt;process_name&gt;</code></p>
-<p>但是有些情况下上述指令是不准的，因为线程并没包括所属进程的名称，那么我们就可以使用下面的指令</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps -Lf &lt;pid&gt;</span><br><span class="line"></span><br><span class="line">-L: Show threads, possibly with LWP and NLWP columns.</span><br></pre></td></tr></table></figure>
-<p>以上就是 Linux 使用时查看进程、线程信息的一些基本指令介绍了，更多的会在以后的使用过程中再进行补充。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Keefe Lin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hackerose"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/07/03/20180703-使用Hexo与GitHub搭建简易博客/" class="post-title-link" itemprop="url">使用Hexo与GitHub搭建简易博客</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-07-03 15:06:19" itemprop="dateCreated datePublished" datetime="2018-07-03T15:06:19+08:00">2018-07-03</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-05-17 14:53:33" itemprop="dateModified" datetime="2019-05-17T14:53:33+08:00">2019-05-17</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>说了很久想自己写一个个人博客，但是无奈就是患有拖延症，现在才想到逐渐补上。那好，就直接从怎样搭建现在这个简易博客说起。</p>
-</blockquote>
-<p>能够快速地搭建起这一个博客，非常感谢的是前辈们给出的相关文档。更多的，是依赖于 Hexo 这个开源框架，以及 GitHub 这个为广大程序员所熟知的平台。下面先简单介绍下他们的作用（其实更多的是记录给自己看）</p>
-<hr>
-<h3 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h3><p><a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> 是 GitHub 所提供的免费博客托管平台，并且有 GitHub 免费提供的域名，例如 <a href="https://username.github.io/，" target="_blank" rel="noopener">https://username.github.io/，</a><br>很大程度上减少了维护一个个人博客的成本。其本质上来说，就是静态网站的托管服务器。</p>
-<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 是一个快速搭建博客的框架，依赖于 Node.js，拥有丰富多彩的<a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题</a>，能够直接将撰写好的 MarkDown 文件编译成为静态文件，嵌入到网站整体当中。</p>
-<p>同时，Hexo 还能方便的与 GitHub Pages 结合，使用其封装好的 <code>hexo-cli</code> 命令行工具，一键部署更新后的代码到各个平台。</p>
-<hr>
-<h3 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h3><blockquote>
-<p>事先声明，以下内容针对 Mac 用户，如果你不是 Mac 用户，那么欢迎<a href="https://osx.cx/2016-clover-macos-sierra10-12-1-jiaocheng.html" target="_blank" rel="noopener">摇身一变</a>成为 Mac 用户。</p>
-</blockquote>
-<p>首先，先完成 GitHub Pages 的配置。根据官方文档，其实步骤很简单。</p>
-<ul>
-<li>在 GitHub 创建名为 <code>username.github.io</code> 的仓库，这里的 <code>username</code> 使用自己 GitHub 的用户名进行替换</li>
-<li>然后在心里默念仓库地址 10 遍，等下要用到，<code>https://github.com/username/username.github.io</code></li>
-</ul>
-<p>关于 GitHub Pages 所需要做的，其实就是这么多。接下来，就是要使用 Hexo，创建博客网站，并提交到 <code>username.github.io</code> 这个仓库就可以了。</p>
-<p>接下来，我们开始关键的步骤（这里假定我们已经是 GitHub 的熟手，早已完成了 SSH key 以及其他繁杂的配置）。</p>
-<ul>
-<li><p>安装 hexo</p>
-<p>如果你已经安装了 <code>npm</code>，那么恭喜你，一行命令解千愁。</p>
-<p><code>npm install -g hexo</code></p>
-<p>如果还没有，而且你是苹果用户，希望你已经装了 <a href="https://brew.sh/" target="_blank" rel="noopener">Homebrew</a>，如果还是没有的话，就点进去看看，安装 5 分钟，排错 2 小时，然后就能用 <code>brew</code> 指令安装 <code>npm</code> 了。编译可能有点久，耐心等等。</p>
-<p><code>brew install npm</code></p>
-</li>
-<li><p>创建 hexo 项目</p>
-<p>执行下面指令，项目名称自由发挥，我比较低调，就叫了 blog。</p>
-<p><code>hexo init blog</code></p>
-<p>然后到项目目录下，安装依赖</p>
-<p><code>npm install</code></p>
-<p>这时候，其实你也同样可以为 hexo 项目的源码创建一个独立的 git 仓库（不是刚刚的 <code>username.github.io</code>），方便对 hexo 的源码进行管理，包括你引入、修改主题，以及你创建的 MarkDown 文档。</p>
-</li>
-<li><p>配置 hexo 项目</p>
-<p>初始化完成后，会在项目目录下发现名为 <code>_config.yml</code> 的文件，用你喜欢的任何编辑器打开它，修改其中的内容。</p>
-<p>找到下面这一段配置，然后回忆一下刚刚默念过 10 遍的 GitHub Pages 的项目地址，大胆的填进去。当然，你也可以定制化分支，通常情况下没这个必要。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/username/username.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<p>这段配置就是告诉 hexo，它到时候编译出来的静态文件应该推送到哪里。最关键的配置其实就是这里，这里记得配置好 git 所用的 SSH key，不然是不能自动推送上去的。</p>
-<p>至于主题，也是在配置文件中指定。例如我使用的就是 <a href="https://github.com/yanm1ng/hexo-theme-vexo" target="_blank" rel="noopener">vexo</a>，在主题自己的官网，能根据文档快速的将其引入到你自己的 hexo 项目中。</p>
-</li>
-</ul>
-<hr>
-<h3 id="大功告成"><a href="#大功告成" class="headerlink" title="大功告成"></a>大功告成</h3><p>好了，该装的已经装了，该配的已经配了。那我们就开始撰写自己的博客，并推送到服务器上吧。</p>
-<ul>
-<li><p>创建博文</p>
-<p>使用指令 <code>hexo new article_name</code>，创建一篇博文，你会在 <code>source/_posts</code> 目录下，找到对应的 MarkDown 文件。</p>
-<p>打开该文件，默认会生成以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: article_name</span><br><span class="line">date: 2018-07-03 15:06:19</span><br><span class="line">tags:</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p><code>tags</code> 中你可以随意的加入自己的分类标签。</p>
-</li>
-<li><p>生成和部署</p>
-<p>写完博文之后，运行下面的快捷命令，hexo 框架就会生成静态文件，并且部署到你指定的 GitHub Pages 仓库。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d -g # generate and deploy</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>静静等待</p>
-<p>现在你就可以访问 <code>https://username.github.io/</code> 查看自己的博客网站了。根据实测，将静态文件推送到仓库，到真正显示更新后的内容，大约需要半分钟到一分钟，所以，喝口茶、检查下错别字，确认下自己提交的内容准确无误吧。</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2066,7 +2010,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
